@@ -6,9 +6,22 @@
     </head>
 
     <body class = "Body">
-        <div id = "ClickBlurContainer"></div> <!-- This div is used to store the clicking blur -->
-        <div id = "MouseBlurContainer"></div> <!-- This div is used to store the mouse moving blur -->
 
+        <div id = "MouseBlurContainer"></div> <!-- This div is used to store the mouse moving blur -->
+        <div id = "ClickBlurContainer"></div> <!-- This div is used to store the clicking blur -->
+
+        <div class = "MindPalaceContainer">
+            <img class = "MindPalaceImage" src = "Images/Mind Palace.png" id = "image" onmouseover = "StartMakingLensFlaresBrighter()">
+            <img class = "MindPalaceLensFlare MindPalaceLensFlareLeft" src = "Images/Lens Flare.png">
+            <img class = "MindPalaceLensFlare MindPalaceLensFlareRight" src = "Images/Lens Flare.png">
+            <p class = "MindPalaceText">Enter the mind palace</p>
+        </div>
+
+        <!---------------------------------------------------------------------------------------->
+        <!--                                                                                    -->
+        <!--                                        CODE                                        -->
+        <!--                                                                                    -->
+        <!---------------------------------------------------------------------------------------->
         <script>
             // Holds the previous mouse position
             var PreviousMousePosX, PreviousMousePosY;
@@ -102,9 +115,52 @@
                 // Removes the blurs
                 setTimeout(() => {
                     ClickBlurContainer.removeChild(ClickBlur);
-                    console.log("dead")
                 }, 2000);
             });
+
+            // Gets the Mind palace stuff
+            var MindPalaceContainer = document.querySelector(".MindPalaceContainer")
+            var MindPalaceImage = document.getElementById("image");
+            var MindPalaceLensFlareLeft = document.querySelector(".MindPalaceLensFlareLeft");
+            var MindPalaceLensFlareRight = document.querySelector(".MindPalaceLensFlareRight");
+            var MindPalaceText = document.querySelector(".MindPalaceText");
+            var LensFlareBrightness = 0.9
+            var LensFlareIsGettingBrighter;
+
+            MindPalaceImage.addEventListener('onmouseover', function () {
+                console.log("fgfg")
+            });
+
+            MindPalaceImage.addEventListener('mouseover', function () {
+
+                setTimeout(() => {
+                    MindPalaceContainer.style.scale = 1.2;
+                    MindPalaceLensFlareLeft.style.opacity = 1;
+                    MindPalaceLensFlareRight.style.opacity = 1;
+                    MindPalaceText.style.transform = `translateY(100px)`
+                }, 50);
+            });
+
+            MindPalaceImage.addEventListener('mouseout', function () {
+                MindPalaceContainer.style.scale = 1;
+                MindPalaceLensFlareLeft.style.opacity = 0;
+                MindPalaceLensFlareRight.style.opacity = 0;
+                MindPalaceText.style.transform = `translateY(0px)`
+                MindPalaceLensFlareLeft.style.filter = `brightness(0.9)`;
+                MindPalaceLensFlareRight.style.filter = `brightness(0.9)`;
+                LensFlareBrightness = 0.9
+                clearInterval(LensFlareIsGettingBrighter);
+            });
+
+            function MakeLensFlaresBrighter() {
+                LensFlareBrightness = LensFlareBrightness + 0.0015;
+                MindPalaceLensFlareLeft.style.filter = `brightness(${LensFlareBrightness})`;
+                MindPalaceLensFlareRight.style.filter = `brightness(${LensFlareBrightness})`;
+            }
+
+            function StartMakingLensFlaresBrighter() {
+                LensFlareIsGettingBrighter = setInterval(MakeLensFlaresBrighter, 0);
+            }
 
         </script>
     </body>
