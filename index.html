@@ -1,58 +1,111 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Wadwe is the best</title>
-        <link rel="stylesheet" href="WebsiteCSS.css">
+        <title>Baked Borgan</title>
+        <link rel="stylesheet" href="WebsiteCSS.css">     
     </head>
-    <body>
-        <div class="title">
-            <button class="btn">WADWE</button>
-            <img src="TitleBackground.gif" alt="TitleBackground" style="width:100%">
-        </div>
-        <img class= "GibsonCreepypasta" src="Gibson Is In Your Walls.gif" alt="Creepypasta" style="width:100%">
-        <div >
-            <button style="color: blue;">Wadwe is the best</button>
-            <p class="Wadwe"style="color: red;">Wadwe is voted times #1 best person ever</p>
-            <p class="Wadwe"style="color: yellow;">Wadwe is god</p>
-            <a class="Wadwe"href="https://twitter.com/Wadwe7"target="_blank"style="color: green;">Wadwe loves twitter</a>
-        </div> 
-        <div class="Grid" style="display: grid; grid-template-columns: 50px 100px 200px 400px 1fr;">
-            <p style="background-color: rgb(27, 27, 211);">1</p>
-            <p style="background-color: rgb(185, 18, 18);">2</p>
-            <p style="background-color: rgb(27, 27, 211);">4</p>
-            <p style="background-color: rgb(185, 18, 18);">8</p>
-            <p style="background-color: rgb(27, 27, 211);">16</p>
-            <p style="background-color: rgb(185, 18, 18);">32</p>
-            <p style="background-color: rgb(27, 27, 211);">64</p>
-            <p style="background-color: rgb(185, 18, 18);">128</p>
-            <p style="background-color: rgb(27, 27, 211);">256</p>
-            <p style="background-color: rgb(185, 18, 18);">512</p>
-            <p style="background-color: rgb(27, 27, 211);">1024</p>
-            <p style="background-color: rgb(185, 18, 18);">2048</p>
-            <p style="background-color: rgb(27, 27, 211);">4096</p>
-            <p style="background-color: rgb(185, 18, 18);">8192</p>
-            <p style="background-color: rgb(27, 27, 211);">16384</p>
-        </div>
-        <div class="Grid" style="display: grid; grid-template-columns: 1fr 2fr 4fr 8fr 16fr 32fr 64fr;">
-            <p style="background-color: rgb(27, 168, 211);">1</p>
-            <p style="background-color: rgb(19, 86, 107);">10</p>
-            <p style="background-color: rgb(27, 168, 211);">100</p>
-            <p style="background-color: rgb(19, 86, 107);">1000</p>
-            <p style="background-color: rgb(27, 168, 211);">10000</p>
-            <p style="background-color: rgb(19, 86, 107);">100000</p>
-            <p style="background-color: rgb(27, 168, 211);">1000000</p>
-            <p style="background-color: rgb(19, 86, 107);">10000000</p>
-            <p style="background-color: rgb(27, 168, 211);">100000000</p>
-            <p style="background-color: rgb(19, 86, 107);">1000000000</p>
-            <p style="background-color: rgb(27, 168, 211);">10000000000</p>
-            <p style="background-color: rgb(19, 86, 107);">100000000000</p>
-            <p style="background-color: rgb(27, 168, 211);">1000000000000</p>
-            <p style="background-color: rgb(19, 86, 107);">10000000000000</p>
-        </div>
-        <div class="Flex" style="display: flexbox;">
-            <p style="background-color: rgb(99, 19, 173);">A</p>
-            <p style="background-color: rgb(99, 19, 173);">B</p>
-            <p style="background-color: rgb(99, 19, 173);">C</p>
-        </div>
+
+    <body class = "Body">
+        <div id = "ClickBlurContainer"></div> <!-- This div is used to store the clicking blur -->
+        <div id = "MouseBlurContainer"></div> <!-- This div is used to store the mouse moving blur -->
+
+        <script>
+            // Holds the previous mouse position
+            var PreviousMousePosX, PreviousMousePosY;
+            var MouseBlurColour = 0;
+
+            // Get the blur containers
+            var MouseBlurContainer = document.getElementById('MouseBlurContainer');
+            var ClickBlurContainer = document.getElementById('ClickBlurContainer');
+
+            function GetPixelsBetweenPoints(x0, y0, x1, y1) {
+                // Uses Bresenham's line drawing algorithm to get every pixel
+                var pixels = [];
+                var dx = Math.abs(x1 - x0);
+                var dy = Math.abs(y1 - y0);
+                var sx = (x0 < x1) ? 1 : -1;
+                var sy = (y0 < y1) ? 1 : -1;
+                var err = dx - dy;
+                var step = 10;
+                var count = 0;
+
+                while (true) {
+                    // Only adds every 10th pixels to reduce lag
+                    if (count % step === 0) {
+                        pixels.push({ x: x0, y: y0 });
+                    }
+                    count++;
+
+                    if ((x0 === x1) && (y0 === y1)) break;
+
+                    var e2 = 2 * err;
+                    if (e2 > -dy) { err -= dy; x0 += sx; }
+                    if (e2 < dx) { err += dx; y0 += sy; }
+                }
+
+                return pixels;
+            }
+            
+            function CreateBlur(X, Y) {
+                // Creates a new blur
+                var MouseBlur = document.createElement('div');
+                MouseBlur.className = 'MouseBlur';
+                MouseBlurContainer.appendChild(MouseBlur);
+                // Update the position of the blur element based on the mouse coordinates
+                MouseBlur.style.left = X - MouseBlur.offsetWidth / 2 + 'px';
+                MouseBlur.style.top = Y - MouseBlur.offsetHeight / 2 + 'px';
+
+                // Sets the colour of the mouse blur
+                MouseBlurColour = (MouseBlurColour + 1) % 360;
+                MouseBlur.style.backgroundColor = `hsla(${MouseBlurColour}, 100%, 50%, 0.1)`;
+
+                // Fading effect
+                setTimeout(() => {
+                    MouseBlur.style.opacity = 0;
+                }, 50);
+
+                // Removes the blurs
+                setTimeout(() => {
+                    MouseBlurContainer.removeChild(MouseBlur);
+                }, 500);
+            }
+            
+            // Event listener to track mouse movement
+            document.addEventListener('mousemove', function (screen) {
+
+                if (PreviousMousePosX !== undefined && PreviousMousePosY !== undefined) {
+                    var pixels = GetPixelsBetweenPoints(PreviousMousePosX, PreviousMousePosY, screen.pageX, screen.pageY);
+                    pixels.forEach(function (pixel) {  // Loops over each pixel between the last and current mouse position
+                        CreateBlur(pixel.x, pixel.y);
+                    });
+                }
+                PreviousMousePosX = screen.pageX;
+                PreviousMousePosY = screen.pageY;
+            });
+
+            // Event listener for mouse clicks
+            document.addEventListener('click', function (screen) {
+                // Creates a new blur
+                var ClickBlur = document.createElement('div');
+                ClickBlur.className = 'ClickBlur';
+                ClickBlurContainer.appendChild(ClickBlur);
+                // Update the position of the blur element based on the mouse coordinates
+                ClickBlur.style.left = screen.pageX - ClickBlur.offsetWidth / 2 + 'px';
+                ClickBlur.style.top = screen.pageY - ClickBlur.offsetHeight / 2 + 'px';
+
+                // Sets the colour of the mouse blur
+                MouseBlurColour = (MouseBlurColour + 5) % 360;
+                ClickBlur.style.borderColor = `hsla(${MouseBlurColour}, 100%, 50%, 0.3)`;                
+
+                ClickBlur.classList.toggle('grown');
+
+                // Removes the blurs
+                setTimeout(() => {
+                    ClickBlurContainer.removeChild(ClickBlur);
+                    console.log("dead")
+                }, 2000);
+            });
+
+        </script>
     </body>
 </html>

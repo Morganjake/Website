@@ -1,43 +1,41 @@
 
-.title {
-    position: relative;
-    height: 20%;
+.Body {
+    background-color:rgb(70, 80, 90);
+    overflow: hidden;
 }
-.title .btn {
+
+#MouseBlurContainer {
     position: absolute;
-    background-image: repeating-linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red, violet);
-    text-align: center;
-    background-size: 800% 800%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 100px;
-    font-weight: bolder;
-    padding: 12px 500px;
-    border: none;
-    animation: rainbow 3s ease infinite;
-} 
-@keyframes rainbow { 
-    0%{background-position:0% 50%}
-    50%{background-position:100% 25%}
-    100%{background-position:0% 50%}
+    pointer-events: none;
 }
 
-.GibsonCreepypasta {
-    max-width: 400px;
+#ClickBlurContainer {
+    position: absolute;
+    pointer-events: none;
 }
 
-.Wadwe{
-    font-style: times new roman;
-    font-size: 100px;
-    font-weight: bolder;
-    margin: 9px; 
+.MouseBlur {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius: 100%;
+    filter: blur(10px);
+    transition: opacity 0.5s ease;
+    pointer-events: none;
 }
-.Grid{
-    font-style: times new roman;
-    font-size: 20px;
-    font-weight: bold;
+
+.ClickBlur {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius: 100%;
+    border: 5px solid;
+    background-color: transparent;
+    filter: blur(2px);
+    transition: transform 5s ease-out;
+    pointer-events: none;
 }
-.Flex{
-    font-size: 20px;
-    font-weight: bold;
+
+.ClickBlur.grown {
+    transform: scale(100);
 }
