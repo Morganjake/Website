@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="brainrot.css">    
+        <title>YOU ARE ENLIGHTENED</title>
+        <script src="https://www.youtube.com/iframe_api"></script>
+    </head>
+    
+    <body class = "Body">
+        <div class = "VideoGrid", id = "VideoGrid">
+        </div>
+        <script>
+            var VideoGrid = document.getElementById("VideoGrid");
+            var VideoUrls = [
+                "ChBg4aowzX8",
+                "Q4MOP8s9KyY",
+                "pt_k_HNz1DE",
+                "fuQf-iGCmKA",
+                "qXcMNBQnQMM",
+                "PVOCPGXYA0w",
+                "-FR1lXLEcmM",
+                "LjtVRw9af2U",
+                "10gjsgA6fTE",
+                "a_r3QouhG3E",
+                "1Dxqmd4lA7Y",
+                "rs9BZg4gDW0",
+                "vD-NlntuD6Y",
+                "n_Dv4JMiwK8",
+                "jTYH3eCGHTM",
+                "PERqJhJG12I",
+                "5mGuCdlCcNM",
+                "gBAKe472zus",
+                "RojwXNJZYHg",
+                "VoVJECL-2NA"
+            ]
+            var player;
+
+            function onYouTubeIframeAPIReady() {
+                VideoCount = 1
+
+                VideoUrls.forEach(function (VideoUrl) {
+                    var VideoDiv = document.createElement('div');
+                    VideoDiv.id = `Video ${VideoCount}`
+                    VideoGrid.appendChild(VideoDiv);
+
+                    player = new YT.Player(`Video ${VideoCount}`, {
+                        height: `${screen.height / 5}`,
+                        width: `${screen.width / 5}`,
+                        videoId: VideoUrl,
+                        playerVars: {
+                            autoplay: 1,
+                            controls: 0, 
+                            modestbranding: 1,
+                            showinfo: 0,
+                            fs: 0,
+                            rel: 0,
+                            mute: 1 
+                        }
+                    });
+
+                    VideoCount++;
+                });
+            }
+        </script>
+    </body>
+</html>

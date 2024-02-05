@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Baked Borgan</title>
-        <link rel="stylesheet" href="WebsiteCSS.css">     
+        <link rel="stylesheet" href="index.css">     
     </head>
 
     <body class = "Body">
@@ -127,10 +127,6 @@
             var LensFlareBrightness = 0.9
             var LensFlareIsGettingBrighter;
 
-            MindPalaceImage.addEventListener('onmouseover', function () {
-                console.log("fgfg")
-            });
-
             MindPalaceImage.addEventListener('mouseover', function () {
 
                 setTimeout(() => {
@@ -148,19 +144,23 @@
                 MindPalaceText.style.transform = `translateY(0px)`
                 MindPalaceLensFlareLeft.style.filter = `brightness(0.9)`;
                 MindPalaceLensFlareRight.style.filter = `brightness(0.9)`;
-                LensFlareBrightness = 0.9
                 clearInterval(LensFlareIsGettingBrighter);
             });
 
             function MakeLensFlaresBrighter() {
-                LensFlareBrightness = LensFlareBrightness + 0.0015;
+                LensFlareBrightness = LensFlareBrightness + 0.015;
                 MindPalaceLensFlareLeft.style.filter = `brightness(${LensFlareBrightness})`;
                 MindPalaceLensFlareRight.style.filter = `brightness(${LensFlareBrightness})`;
             }
 
             function StartMakingLensFlaresBrighter() {
+                LensFlareBrightness = 0.9
                 LensFlareIsGettingBrighter = setInterval(MakeLensFlaresBrighter, 0);
             }
+
+            MindPalaceImage.addEventListener('click', function () {
+                window.location.href = "brainrot.html"
+            });
 
         </script>
     </body>

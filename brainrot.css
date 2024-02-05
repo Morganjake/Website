@@ -1,0 +1,14 @@
+
+.Body {
+    background-color:rgb(70, 80, 90);
+    overflow: hidden;
+    margin: 0px;
+}
+
+.VideoGrid {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: auto auto auto auto auto;
+    pointer-events: none;
+}

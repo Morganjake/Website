@@ -1,0 +1,92 @@
+
+.Body {
+    background-color:rgb(70, 80, 90);
+    overflow: hidden;
+}
+
+#MouseBlurContainer {
+    position: absolute;
+    pointer-events: none;
+}
+
+#ClickBlurContainer {
+    position: absolute;
+    pointer-events: none;
+}
+
+.MouseBlur {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius: 100%;
+    filter: blur(10px);
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.ClickBlur {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius: 100%;
+    border: 5px solid;
+    background-color: transparent;
+    filter: blur(2px);
+    transition: transform 5s ease-out;
+    pointer-events: none;
+}
+
+.ClickBlur.grown {
+    transform: scale(200);
+}
+
+
+.MindPalaceContainer {
+    position: relative;
+    width: 320px;
+    height: 180px;
+    transition: scale 1s ease;
+}
+
+.MindPalaceImage {
+    margin: 50px;
+    width: 320px;
+    height: 180px;
+    position: absolute;
+    user-select: none;
+}
+
+.MindPalaceLensFlare{
+    width: 300px;
+    height: 100px;
+    position: absolute;
+    opacity: 0;
+    filter: brightness(0.9);
+    transition: opacity 1s ease;
+    pointer-events: none;
+    user-select: none;
+}
+
+.MindPalaceLensFlareLeft{
+    padding-left: 30px;
+    padding-top: 55px;
+}
+
+.MindPalaceLensFlareRight{
+    padding-left: 90px;
+    padding-top: 50px;
+}
+
+.MindPalaceText{
+    width: 320px;
+    margin-left: 71px;
+    margin-top: 150px;
+    position: absolute;
+    font-size: 30px;
+    font-family:'Franklin Gothic Medium';
+    background-image: linear-gradient(to right, white, gray);
+    background-clip: text;
+    color: transparent;
+    pointer-events: none;
+    transition: transform 1s ease;
+}
