@@ -2,6 +2,7 @@
 .Body {
     background-color:rgb(70, 80, 90);
     overflow: hidden;
+    position: relative;
     margin: 0px;
 }
 
@@ -11,4 +12,5 @@
     width: 100%;
     grid-template-columns: auto auto auto auto auto;
     pointer-events: none;
+    position: absolute;
 }

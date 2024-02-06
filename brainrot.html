@@ -6,7 +6,7 @@
         <script src="https://www.youtube.com/iframe_api"></script>
     </head>
     
-    <body class = "Body">
+    <body class = "Body" id = "Body">
         <div class = "VideoGrid", id = "VideoGrid">
         </div>
         <script>
@@ -31,7 +31,9 @@
                 "5mGuCdlCcNM",
                 "gBAKe472zus",
                 "RojwXNJZYHg",
-                "VoVJECL-2NA"
+                "VoVJECL-2NA",
+                "fu2gdoP8AFk", // Background
+                "7Ge7Ajbzc0U"  //
             ]
             var player;
 
@@ -39,15 +41,24 @@
                 VideoCount = 1
 
                 VideoUrls.forEach(function (VideoUrl) {
-                    var VideoDiv = document.createElement('div');
-                    VideoDiv.id = `Video ${VideoCount}`
-                    VideoGrid.appendChild(VideoDiv);
-
+                    var VideoDiv = document.createElement("div");
+                    var IsBackgroundVideo = VideoUrl == "fu2gdoP8AFk" || VideoUrl == "7Ge7Ajbzc0U";
+                    if (IsBackgroundVideo) { // Seperate code for the hypnotic effect
+                        Body = document.getElementById("Body");
+                        VideoDiv.id = `Video ${VideoCount}`;
+                        VideoDiv.style.opacity = VideoUrl == "fu2gdoP8AFk" ? 0.03 : 0.3; // Sets opacity
+                        VideoDiv.style.position = `Absolute`;
+                        Body.appendChild(VideoDiv);
+                    }
+                    else {
+                        VideoDiv.id = `Video ${VideoCount}`
+                        VideoGrid.appendChild(VideoDiv);
+                    }
                     player = new YT.Player(`Video ${VideoCount}`, {
-                        height: `${screen.height / 5}`,
-                        width: `${screen.width / 5}`,
+                        height: IsBackgroundVideo ? `${screen.height}` : `${screen.height / 4.6}`,
+                        width: IsBackgroundVideo ? `${screen.width}` : `${screen.width / 5}`,
                         videoId: VideoUrl,
-                        playerVars: {
+                        playerVars: { // Stops you from interacting with all the youtube stuff
                             autoplay: 1,
                             controls: 0, 
                             modestbranding: 1,
