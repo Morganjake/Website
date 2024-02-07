@@ -1,0 +1,13 @@
+.Body {
+    background-color:rgb(70, 80, 90);
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.gif {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

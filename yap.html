@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="yap.css">   
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bouncing GIF</title>
+    </head>
+
+    <body class = "Body" id = "Body">
+        <ul id = "Yaps">
+        </ul>
+        <script>
+            var Body = document.getElementById("Body")
+            var Yaps = document.getElementById("Yaps")
+            for (let i = 0; i < 100; i++) {
+                var Yap = document.createElement('img');
+                Yap.className = 'gif';
+                Yap.src = "Images/Yap.gif"
+                Yaps.appendChild(Yap);
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                
+                Gifs = Array.from(document.getElementsByClassName("gif"))
+                console.log(Gifs)
+                Gifs.forEach(Gif => {
+
+                    var x = 0;
+                    var y = 0;
+                    var speedX = Math.random() * 20;
+                    var speedY = Math.random() * 20;
+
+                    function animate() {
+                        x += speedX;
+                        y += speedY;
+
+                        // Check for collisions with container walls
+                        if (x < 0 || x + Gif.offsetWidth > screen.width) {
+                            speedX *= -1; // Reverse direction
+                        }
+                        if (y < 0 || y + Gif.offsetHeight > screen.height - Gif.offsetHeight / 2) {
+                            speedY *= -1; // Reverse direction
+                        }
+
+                        // Update GIF position
+                        Gif.style.left = x + 'px';
+                        Gif.style.top = y + 'px';
+
+                        requestAnimationFrame(animate);
+                    }
+
+                    animate();
+                }); 
+            });
+        </script>
+    </body>
+</html>
