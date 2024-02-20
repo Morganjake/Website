@@ -4,6 +4,7 @@
     overflow: hidden;
     position: relative;
     margin: 0px;
+    pointer-events: none;
 }
 
 .VideoGrid {
@@ -11,6 +12,16 @@
     height: 100%;
     width: 100%;
     grid-template-columns: auto auto auto auto auto;
-    pointer-events: none;
     position: absolute;
+}
+
+.Brainrot {
+    height: 25vh;
+    width: 20vw;
+}
+
+.Background {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
 }

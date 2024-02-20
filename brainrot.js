@@ -26,25 +26,27 @@ var VideoUrls = [
 var player;
 
 function onYouTubeIframeAPIReady() {
+
     VideoCount = 1
-    
+
     VideoUrls.forEach(function (VideoUrl) {
         var VideoDiv = document.createElement("div");
         var IsBackgroundVideo = VideoUrl == "fu2gdoP8AFk" || VideoUrl == "7Ge7Ajbzc0U";
-        if (IsBackgroundVideo) { // Seperate code for the hypnotic effect
+
+        if (IsBackgroundVideo) { // Seperate code for the background videos
             Body = document.getElementById("Body");
             VideoDiv.id = `Video ${VideoCount}`;
+            VideoDiv.className = `Background`
             VideoDiv.style.opacity = VideoUrl == "fu2gdoP8AFk" ? 0.03 : 0.3; // Sets opacity
-            VideoDiv.style.position = `Absolute`;
             Body.appendChild(VideoDiv);
         }
         else {
             VideoDiv.id = `Video ${VideoCount}`
+            VideoDiv.className = `Brainrot`
             VideoGrid.appendChild(VideoDiv);
         }
+
         player = new YT.Player(`Video ${VideoCount}`, {
-            height: IsBackgroundVideo ? `${screen.height}` : `${screen.height / 4.6}`,
-            width: IsBackgroundVideo ? `${screen.width}` : `${screen.width / 5}`,
             videoId: VideoUrl,
             playerVars: { // Stops you from interacting with all the youtube stuff
                 autoplay: 1,
