@@ -29,7 +29,6 @@ function onYouTubeIframeAPIReady() {
     VideoCount = 1
     
     VideoUrls.forEach(function (VideoUrl) {
-        console.log(VideoUrl)
         var VideoDiv = document.createElement("div");
         var IsBackgroundVideo = VideoUrl == "fu2gdoP8AFk" || VideoUrl == "7Ge7Ajbzc0U";
         if (IsBackgroundVideo) { // Seperate code for the hypnotic effect
@@ -41,9 +40,7 @@ function onYouTubeIframeAPIReady() {
         }
         else {
             VideoDiv.id = `Video ${VideoCount}`
-            console.log("heko")
             VideoGrid.appendChild(VideoDiv);
-            console.log("nah")
         }
         player = new YT.Player(`Video ${VideoCount}`, {
             height: IsBackgroundVideo ? `${screen.height}` : `${screen.height / 4.6}`,
