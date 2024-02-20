@@ -8,4 +8,6 @@
 
 .gif {
     position: absolute;
+    -webkit-user-drag: none;    /*Stop it from being dragable*/
+    user-select: none;          /*Stop it from being hightlightable*/
 }
