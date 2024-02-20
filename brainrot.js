@@ -1,5 +1,5 @@
 var VideoGrid = document.getElementById("VideoGrid");
-var VideoUrls = [ // List of all the youtube urls 
+var VideoUrls = [
     "ChBg4aowzX8",
     "Q4MOP8s9KyY",
     "pt_k_HNz1DE",
@@ -25,33 +25,29 @@ var VideoUrls = [ // List of all the youtube urls
 ]
 var player;
 
-
 function onYouTubeIframeAPIReady() {
     VideoCount = 1
-
+    
     VideoUrls.forEach(function (VideoUrl) {
-
+        console.log(VideoUrl)
         var VideoDiv = document.createElement("div");
         var IsBackgroundVideo = VideoUrl == "fu2gdoP8AFk" || VideoUrl == "7Ge7Ajbzc0U";
-
-        if (IsBackgroundVideo) { // Seperate code for the background videos
+        if (IsBackgroundVideo) { // Seperate code for the hypnotic effect
             Body = document.getElementById("Body");
             VideoDiv.id = `Video ${VideoCount}`;
             VideoDiv.style.opacity = VideoUrl == "fu2gdoP8AFk" ? 0.03 : 0.3; // Sets opacity
             VideoDiv.style.position = `Absolute`;
             Body.appendChild(VideoDiv);
         }
-
-        else { // Adds the brainrot videos to the grid
+        else {
             VideoDiv.id = `Video ${VideoCount}`
+            console.log("heko")
             VideoGrid.appendChild(VideoDiv);
+            console.log("nah")
         }
-
         player = new YT.Player(`Video ${VideoCount}`, {
-            // Sets the background size to the screen size and shrinks all the brainrot videos
             height: IsBackgroundVideo ? `${screen.height}` : `${screen.height / 4.6}`,
             width: IsBackgroundVideo ? `${screen.width}` : `${screen.width / 5}`,
-
             videoId: VideoUrl,
             playerVars: { // Stops you from interacting with all the youtube stuff
                 autoplay: 1,
@@ -63,7 +59,6 @@ function onYouTubeIframeAPIReady() {
                 mute: 1 
             }
         });
-
         VideoCount++;
     });
 }

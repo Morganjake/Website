@@ -106,7 +106,7 @@ var MindPalaceText = document.querySelector(".MindPalaceText");
 var LensFlareBrightness = 0.9
 var LensFlareIsGettingBrighter;
 
-
+console.log(MindPalaceImage)
 MindPalaceImage.addEventListener('mouseover', function () {
 
     setTimeout(() => {
