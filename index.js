@@ -15,11 +15,11 @@ function GetPixelsBetweenPoints(x0, y0, x1, y1) {
     var sx = (x0 < x1) ? 1 : -1;
     var sy = (y0 < y1) ? 1 : -1;
     var err = dx - dy;
-    var step = 10;
+    var step = 15;
     var count = 0;
 
     while (true) {
-        // Only adds every 10th pixels to reduce lag
+        // Only adds every 15th pixels to reduce lag
         if (count % step === 0) {
             pixels.push({ x: x0, y: y0 });
         }
@@ -50,9 +50,7 @@ function CreateBlur(X, Y) {
     MouseBlur.style.backgroundColor = `hsla(${MouseBlurColour}, 100%, 50%, 0.1)`;
 
     // Fading effect
-    setTimeout(() => {
-        MouseBlur.style.opacity = 0;
-    }, 50);
+    MouseBlur.style.opacity = 0;
 
     // Removes the blurs
     setTimeout(() => {
@@ -98,23 +96,20 @@ document.addEventListener('click', function (screen) {
 });
 
 // Gets the Mind palace stuff
-var MindPalaceContainer = document.querySelector(".MindPalaceContainer")
-var MindPalaceImage = document.getElementById("image");
+var MindPalaceContainer = document.getElementById("MindPalace");
+var MindPalaceImage = document.getElementById("MindPalaceImage");
 var MindPalaceLensFlareLeft = document.querySelector(".MindPalaceLensFlareLeft");
 var MindPalaceLensFlareRight = document.querySelector(".MindPalaceLensFlareRight");
 var MindPalaceText = document.querySelector(".MindPalaceText");
-var LensFlareBrightness = 0.9
+var LensFlareBrightness = 0.9;
 var LensFlareIsGettingBrighter;
 
-console.log(MindPalaceImage)
 MindPalaceImage.addEventListener('mouseover', function () {
 
-    setTimeout(() => {
-        MindPalaceContainer.style.scale = 1.2;
-        MindPalaceLensFlareLeft.style.opacity = 1;
-        MindPalaceLensFlareRight.style.opacity = 1;
-        MindPalaceText.style.transform = `translateY(100px)`
-    }, 50);
+    MindPalaceContainer.style.scale = 1.2;
+    MindPalaceLensFlareLeft.style.opacity = 1;
+    MindPalaceLensFlareRight.style.opacity = 1;
+    MindPalaceText.style.transform = `translateY(70px)`;  // Distance the text 
 });
 
 
@@ -137,11 +132,33 @@ function MakeLensFlaresBrighter() {
 
 
 function StartMakingLensFlaresBrighter() {
-    LensFlareBrightness = 0.9
+    LensFlareBrightness = 0.9;
     LensFlareIsGettingBrighter = setInterval(MakeLensFlaresBrighter, 0);
 }
 
 
 MindPalaceImage.addEventListener('click', function () {
-    window.location.href = "brainrot.html"
+    window.location.href = "brainrot.html";
+});
+
+
+var YapSessionContainer = document.getElementById("YapSession");
+var YapSessionText = document.querySelector(".YapSessionText");
+
+
+YapSessionImage.addEventListener('mouseover', function () {
+
+    YapSessionContainer.style.scale = 1.2;
+    YapSessionText.style.transform = `translateY(7000px)`;
+});
+
+
+YapSessionImage.addEventListener('mouseout', function () {
+    YapSessionContainer.style.scale = 1;
+    YapSessionText.style.transform = `translateY(0px)`;
+});
+
+
+YapSessionImage.addEventListener('click', function () {
+    window.location.href = "yap.html";
 });

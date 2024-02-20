@@ -41,19 +41,41 @@
 }
 
 
-.MindPalaceContainer {
-    position: relative;
-    width: 320px;
-    height: 180px;
-    transition: scale 1s ease;
+/**************************************************************************************************/
+/**************************************************************************************************/
+
+.Buttons {
+    display: flex;
+    padding: 70px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
 }
 
-.MindPalaceImage {
-    margin: 50px;
+.ButtonContainer {
+    margin: 20px;
+    margin-bottom: 30px;
+    transition: scale 1s ease;
+    position: relative;
+}
+
+.ButtonImage {
     width: 320px;
     height: 180px;
-    position: absolute;
     user-select: none;
+    border-radius: 7px;
+}
+
+.ButtonText{
+    position: relative;
+    bottom: 50px;
+    margin: auto;
+    font-size: 30px;
+    font-family:'Franklin Gothic Medium';
+    background-clip: text;
+    color: transparent;
+    pointer-events: none;
+    transition: transform 1s ease;
 }
 
 .MindPalaceLensFlare{
@@ -68,25 +90,22 @@
 }
 
 .MindPalaceLensFlareLeft{
-    padding-left: 30px;
-    padding-top: 55px;
+    top: 2px;
+    right: 38px;
 }
 
 .MindPalaceLensFlareRight{
-    padding-left: 90px;
-    padding-top: 50px;
+    bottom: 118px;
+    left: 34px;
 }
 
 .MindPalaceText{
-    width: 320px;
-    margin-left: 71px;
-    margin-top: 150px;
-    position: absolute;
-    font-size: 30px;
-    font-family:'Franklin Gothic Medium';
+    left: 20px;
     background-image: linear-gradient(to right, white, gray);
-    background-clip: text;
-    color: transparent;
-    pointer-events: none;
-    transition: transform 1s ease;
+}
+
+.YapSessionText {
+    left: 40px;
+    background-image: linear-gradient(to right, purple, red); 
+    transition: transform 100s ease-out;
 }
