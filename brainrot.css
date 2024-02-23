@@ -1,9 +1,9 @@
 
 .Body {
     background-color:rgb(70, 80, 90);
+    margin: 0px;
     overflow: hidden;
     position: relative;
-    margin: 0px;
     pointer-events: none;
 }
 

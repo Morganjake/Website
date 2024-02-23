@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     document.body.addEventListener('click', function(event) {
-        console.log(event.screenX, event.screenY)
         if (event.target.classList.contains('gif')) {
 
             var Pos = event.target.getBoundingClientRect()

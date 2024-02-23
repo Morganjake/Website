@@ -7,8 +7,9 @@ var MouseBlurContainer = document.getElementById('MouseBlurContainer');
 var ClickBlurContainer = document.getElementById('ClickBlurContainer');
 
 
+// Uses Bresenham's line drawing algorithm to get every pixel
 function GetPixelsBetweenPoints(x0, y0, x1, y1) {
-    // Uses Bresenham's line drawing algorithm to get every pixel
+
     var pixels = [];
     var dx = Math.abs(x1 - x0);
     var dy = Math.abs(y1 - y0);
@@ -36,8 +37,9 @@ function GetPixelsBetweenPoints(x0, y0, x1, y1) {
 }
 
 
+// Creates a new blur
 function CreateBlur(X, Y) {
-    // Creates a new blur
+    
     var MouseBlur = document.createElement('div');
     MouseBlur.className = 'MouseBlur';
     MouseBlurContainer.appendChild(MouseBlur);
@@ -95,7 +97,10 @@ document.addEventListener('click', function (screen) {
     }, 2000);
 });
 
-// Gets the Mind palace stuff
+/*********************************/
+/*          MIND PALACE          */
+/*********************************/
+
 var MindPalaceContainer = document.getElementById("MindPalace");
 var MindPalaceImage = document.getElementById("MindPalaceImage");
 var MindPalaceLensFlareLeft = document.querySelector(".MindPalaceLensFlareLeft");
@@ -141,6 +146,9 @@ MindPalaceImage.addEventListener('click', function () {
     window.location.href = "brainrot.html";
 });
 
+/*********************************/
+/*          YAP SESSION          */
+/*********************************/
 
 var YapSessionContainer = document.getElementById("YapSession");
 var YapSessionText = document.querySelector(".YapSessionText");
