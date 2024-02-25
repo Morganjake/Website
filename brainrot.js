@@ -1,3 +1,12 @@
+
+// Shuffles an array using a Durstenfeld shuffle algorithm (stupid name)
+function Shuffle(List) {
+    for (let i = List.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [List[i], List[j]] = [List[j], List[i]];
+    }
+}
+
 var VideoGrid = document.getElementById("VideoGrid");
 var VideoUrls = [
     "ChBg4aowzX8",
@@ -23,6 +32,9 @@ var VideoUrls = [
     "fu2gdoP8AFk", // Background
     "7Ge7Ajbzc0U"  //
 ]
+
+Shuffle(VideoUrls)
+
 var player;
 
 function onYouTubeIframeAPIReady() {

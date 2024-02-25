@@ -3,11 +3,11 @@ var PreviousMousePosX, PreviousMousePosY;
 var MouseBlurColour = 0;
 
 // Get the blur containers
-var MouseBlurContainer = document.getElementById('MouseBlurContainer');
-var ClickBlurContainer = document.getElementById('ClickBlurContainer');
+var MouseBlurContainer = document.getElementById("MouseBlurContainer");
+var ClickBlurContainer = document.getElementById("ClickBlurContainer");
 
 
-// Uses Bresenham's line drawing algorithm to get every pixel
+// Uses Bresenham"s line drawing algorithm to get every pixel
 function GetPixelsBetweenPoints(x0, y0, x1, y1) {
 
     var pixels = [];
@@ -40,12 +40,12 @@ function GetPixelsBetweenPoints(x0, y0, x1, y1) {
 // Creates a new blur
 function CreateBlur(X, Y) {
     
-    var MouseBlur = document.createElement('div');
-    MouseBlur.className = 'MouseBlur';
+    var MouseBlur = document.createElement("div");
+    MouseBlur.className = "MouseBlur";
     MouseBlurContainer.appendChild(MouseBlur);
     // Update the position of the blur element based on the mouse coordinates
-    MouseBlur.style.left = X - MouseBlur.offsetWidth / 2 + 'px';
-    MouseBlur.style.top = Y - MouseBlur.offsetHeight / 2 + 'px';
+    MouseBlur.style.left = X - MouseBlur.offsetWidth / 2 + "px";
+    MouseBlur.style.top = Y - MouseBlur.offsetHeight / 2 + "px";
 
     // Sets the colour of the mouse blur
     MouseBlurColour = (MouseBlurColour + 1) % 360;
@@ -62,7 +62,7 @@ function CreateBlur(X, Y) {
 
 
 // Event listener to track mouse movement
-document.addEventListener('mousemove', function (screen) {
+document.addEventListener("mousemove", function (screen) {
 
     if (PreviousMousePosX !== undefined && PreviousMousePosY !== undefined) {
         var pixels = GetPixelsBetweenPoints(PreviousMousePosX, PreviousMousePosY, screen.pageX, screen.pageY);
@@ -76,20 +76,20 @@ document.addEventListener('mousemove', function (screen) {
 
 
 // Event listener for mouse clicks
-document.addEventListener('click', function (screen) {
+document.addEventListener("click", function (screen) {
     // Creates a new blur
-    var ClickBlur = document.createElement('div');
-    ClickBlur.className = 'ClickBlur';
+    var ClickBlur = document.createElement("div");
+    ClickBlur.className = "ClickBlur";
     ClickBlurContainer.appendChild(ClickBlur);
     // Update the position of the blur element based on the mouse coordinates
-    ClickBlur.style.left = screen.pageX - ClickBlur.offsetWidth / 2 + 'px';
-    ClickBlur.style.top = screen.pageY - ClickBlur.offsetHeight / 2 + 'px';
+    ClickBlur.style.left = screen.pageX - ClickBlur.offsetWidth / 2 + "px";
+    ClickBlur.style.top = screen.pageY - ClickBlur.offsetHeight / 2 + "px";
 
     // Sets the colour of the mouse blur
     MouseBlurColour = (MouseBlurColour + 5) % 360;
     ClickBlur.style.borderColor = `hsla(${MouseBlurColour}, 100%, 50%, 0.3)`;                
 
-    ClickBlur.classList.toggle('grown');
+    ClickBlur.classList.toggle("grown");
 
     // Removes the blurs
     setTimeout(() => {
@@ -109,7 +109,7 @@ var MindPalaceText = document.querySelector(".MindPalaceText");
 var LensFlareBrightness = 0.9;
 var LensFlareIsGettingBrighter;
 
-MindPalaceImage.addEventListener('mouseover', function () {
+MindPalaceImage.addEventListener("mouseover", function () {
 
     MindPalaceContainer.style.scale = 1.2;
     MindPalaceLensFlareLeft.style.opacity = 1;
@@ -118,7 +118,7 @@ MindPalaceImage.addEventListener('mouseover', function () {
 });
 
 
-MindPalaceImage.addEventListener('mouseout', function () {
+MindPalaceImage.addEventListener("mouseout", function () {
     MindPalaceContainer.style.scale = 1;
     MindPalaceLensFlareLeft.style.opacity = 0;
     MindPalaceLensFlareRight.style.opacity = 0;
@@ -142,7 +142,7 @@ function StartMakingLensFlaresBrighter() {
 }
 
 
-MindPalaceImage.addEventListener('click', function () {
+MindPalaceImage.addEventListener("click", function () {
     window.location.href = "brainrot.html";
 });
 
@@ -154,19 +154,19 @@ var YapSessionContainer = document.getElementById("YapSession");
 var YapSessionText = document.querySelector(".YapSessionText");
 
 
-YapSessionImage.addEventListener('mouseover', function () {
+YapSessionImage.addEventListener("mouseover", function () {
 
     YapSessionContainer.style.scale = 1.2;
     YapSessionText.style.transform = `translateY(7000px)`;
 });
 
 
-YapSessionImage.addEventListener('mouseout', function () {
+YapSessionImage.addEventListener("mouseout", function () {
     YapSessionContainer.style.scale = 1;
     YapSessionText.style.transform = `translateY(0px)`;
 });
 
 
-YapSessionImage.addEventListener('click', function () {
+YapSessionImage.addEventListener("click", function () {
     window.location.href = "yap.html";
 });

@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
     CreateYap(window.innerWidth / 2, window.innerHeight / 2, 180, 180, 5, 5);
 
     function CreateYap(X, Y, Width, Height, SpeedX, SpeedY) {
-        var Yap = document.createElement('img');
-        Yap.className = 'gif';
+        var Yap = document.createElement("img");
+        Yap.className = "gif";
         Yap.src = "Images/Yap.gif"
         Yap.width = Width
         Yap.height = Height
@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     function MoveYap(Yap, X, Y, SpeedX, SpeedY) {
-        Yap.style.left = X + 'px';
-        Yap.style.top = Y + 'px';
+        Yap.style.left = X + "px";
+        Yap.style.top = Y + "px";
 
         function UpdatePosition() {
             var XPos = parseInt(Yap.style.left) || 0;
@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 SpeedY *= -1; // Reverse direction
             }
 
-            Yap.style.left = NewXPos + 'px';
-            Yap.style.top = NewYPos + 'px';
+            Yap.style.left = NewXPos + "px";
+            Yap.style.top = NewYPos + "px";
 
             requestAnimationFrame(UpdatePosition); // Calls the function every frame
         }
@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
-    document.body.addEventListener('click', function(event) {
-        if (event.target.classList.contains('gif')) {
+    document.body.addEventListener("click", function(event) {
+        if (event.target.classList.contains("gif")) {
 
             var Pos = event.target.getBoundingClientRect()
             
