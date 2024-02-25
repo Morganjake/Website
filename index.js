@@ -142,10 +142,6 @@ function StartMakingLensFlaresBrighter() {
 }
 
 
-MindPalaceImage.addEventListener("click", function () {
-    window.location.href = "brainrot.html";
-});
-
 /*********************************/
 /*          YAP SESSION          */
 /*********************************/
@@ -164,9 +160,4 @@ YapSessionImage.addEventListener("mouseover", function () {
 YapSessionImage.addEventListener("mouseout", function () {
     YapSessionContainer.style.scale = 1;
     YapSessionText.style.transform = `translateY(0px)`;
-});
-
-
-YapSessionImage.addEventListener("click", function () {
-    window.location.href = "yap.html";
 });
