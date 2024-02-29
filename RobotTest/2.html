@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>You are a robto</title>
+        <link rel = "stylesheet" href = "2.css">
+    </head>
+    <body class = "Body" onload = "GenerateButtons();">
+
+        <div class = "Box">
+
+            <div class = "Header">
+                <p class = "HeaderText" >Select all squares with</p>
+                <p class = "HeaderText BigWord">ghosts</p>
+                <p class = "HeaderText">If there are none, click continue</p>
+            </div>
+
+            <div class = "Captcha">
+                <img class = "CaptchaImage" src = "../Images/HauntedHouse.jpg">
+                <div class = "ButtonGrid" id = "ButtonGrid"></div>
+            </div>
+            
+        </div>
+
+        <div class = "Continue" onclick = "VerifyCaptcha();">
+            <p class = "ContinueText">Continue</p>
+            <p class = "ErrorMessage" id = "ErrorMessage"></p>
+        </div>
+
+        <script src="2.js"></script>
+    </body>
+</html>

@@ -114,7 +114,7 @@ MindPalaceImage.addEventListener("mouseover", function () {
     MindPalaceContainer.style.scale = 1.2;
     MindPalaceLensFlareLeft.style.opacity = 1;
     MindPalaceLensFlareRight.style.opacity = 1;
-    MindPalaceText.style.transform = `translateY(70px)`;  // Distance the text 
+    MindPalaceText.style.transform = `translateY(70px)`;  // Distance the text
 });
 
 
