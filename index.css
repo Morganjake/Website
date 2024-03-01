@@ -1,8 +1,8 @@
 
 .Body {
     background-color:rgb(70, 80, 90);
-    overflow: hidden;
     margin: 0px;
+    overflow: hidden;
 }
 
 /*************************************************************************************************/
@@ -20,24 +20,24 @@
 }
 
 .MouseBlur {
+    position: absolute;
     width: 50px;
     height: 50px;
-    position: absolute;
     border-radius: 100%;
-    filter: blur(10px);
     transition: opacity 0.5s ease;
+    filter: blur(10px);
     pointer-events: none;
 }
 
 .ClickBlur {
+    position: absolute;
     width: 50px;
     height: 50px;
-    position: absolute;
+    background-color: transparent;
     border-radius: 100%;
     border: 5px solid;
-    background-color: transparent;
-    filter: blur(2px);
     transition: transform 5s ease-out;
+    filter: blur(2px);
     pointer-events: none;
 }
 
@@ -58,29 +58,30 @@
 }
 
 .ButtonContainer {
+    position: relative;
     margin: 20px;
     margin-bottom: 30px;
     transition: scale 1s ease;
-    position: relative;
 }
 
 .ButtonImage {
     width: 320px;
     height: 180px;
-    user-select: none;
     border-radius: 7px;
+    user-select: none;
 }
 
 .ButtonText{
     position: relative;
     bottom: 50px;
     margin: auto;
+    color: transparent;
+    background-clip: text;
     font-size: 30px;
     font-family: "Franklin Gothic Medium";
-    background-clip: text;
-    color: transparent;
-    pointer-events: none;
     transition: transform 1s ease;
+    pointer-events: none;
+    user-select: none;
 }
 
 /*********************************/
@@ -88,12 +89,12 @@
 /*********************************/
 
 .MindPalaceLensFlare{
+    position: absolute;
     width: 300px;
     height: 100px;
-    position: absolute;
     opacity: 0;
-    filter: brightness(0.9);
     transition: opacity 1s ease;
+    filter: brightness(0.9);
     pointer-events: none;
     user-select: none;
 }
@@ -111,6 +112,7 @@
 .MindPalaceText{
     left: 20px;
     background-image: linear-gradient(to right, white, gray);
+    user-select: none;
 }
 
 /*********************************/
@@ -121,4 +123,5 @@
     left: 40px;
     background-image: linear-gradient(to right, purple, red); 
     transition: transform 100s;
+    user-select: none;
 }
