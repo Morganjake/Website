@@ -1,5 +1,5 @@
 
-.Body {
+#Body {
     background-color:rgb(70, 80, 90);
     margin: 0px;
     overflow: hidden;
@@ -49,7 +49,7 @@
 /*                                            BUTTONS                                            */
 /*************************************************************************************************/
 
-.Buttons {
+#Buttons {
     display: flex;
     padding: 70px;
     flex-wrap: wrap;
@@ -99,17 +99,17 @@
     user-select: none;
 }
 
-.MindPalaceLensFlareLeft{
+#MindPalaceLensFlareLeft{
     top: 2px;
     right: 38px;
 }
 
-.MindPalaceLensFlareRight{
+#MindPalaceLensFlareRight{
     bottom: 118px;
     left: 34px;
 }
 
-.MindPalaceText{
+#MindPalaceText{
     left: 20px;
     background-image: linear-gradient(to right, white, gray);
     user-select: none;
@@ -119,9 +119,23 @@
 /*          YAP SESSION          */
 /*********************************/
 
-.YapSessionText {
+#YapSessionText {
     left: 40px;
     background-image: linear-gradient(to right, purple, red); 
     transition: transform 100s;
     user-select: none;
+}
+
+/********************************/
+/*          ROBOT TEST          */  
+/********************************/
+
+#MatrixRain {
+    display: block;
+    background-color: #0F0F0F;
+}
+
+#MatrixRainText {
+    left: 50px;
+    background-image: linear-gradient(to bottom, blue, pink); 
 }

@@ -1,12 +1,12 @@
 
-.Body {
+#Body {
     background-color:rgb(70, 80, 90);
     margin: 0px;
     overflow: hidden;
     pointer-events: none;
 }
 
-.VideoGrid {
+#VideoGrid {
     display: grid;
     position: absolute;
     height: 100%;

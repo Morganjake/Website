@@ -103,9 +103,9 @@ document.addEventListener("click", function (screen) {
 
 var MindPalaceContainer = document.getElementById("MindPalace");
 var MindPalaceImage = document.getElementById("MindPalaceImage");
-var MindPalaceLensFlareLeft = document.querySelector(".MindPalaceLensFlareLeft");
-var MindPalaceLensFlareRight = document.querySelector(".MindPalaceLensFlareRight");
-var MindPalaceText = document.querySelector(".MindPalaceText");
+var MindPalaceLensFlareLeft = document.getElementById("MindPalaceLensFlareLeft");
+var MindPalaceLensFlareRight = document.getElementById("MindPalaceLensFlareRight");
+var MindPalaceText = document.getElementById("MindPalaceText");
 var LensFlareBrightness = 0.9;
 var LensFlareIsGettingBrighter;
 
@@ -147,7 +147,7 @@ function StartMakingLensFlaresBrighter() {
 /*********************************/
 
 var YapSessionContainer = document.getElementById("YapSession");
-var YapSessionText = document.querySelector(".YapSessionText");
+var YapSessionText = document.getElementById("YapSessionText");
 
 
 YapSessionImage.addEventListener("mouseover", function () {
@@ -161,3 +161,59 @@ YapSessionImage.addEventListener("mouseout", function () {
     YapSessionContainer.style.scale = 1;
     YapSessionText.style.transform = `translateY(0px)`;
 });
+
+/********************************/
+/*          ROBOT TEST          */  
+/********************************/
+
+var MatrixRainContainer = document.getElementById("RobotTest");
+var MatrixRainText = document.getElementById("MatrixRainText");
+
+var MatrixRainCanvas = document.getElementById('MatrixRain');
+var MatrixRainContext = MatrixRainCanvas.getContext('2d');
+var Letters = 'ABCDEFGHIJKLMNOPQRSTUVXYZ';
+var Columns = MatrixRainCanvas.width / 10;
+var MatrixRainActive = false
+
+var Drops = [];
+for (var i = 0; i < Columns; i++) {
+    Drops[i] = 1;
+}
+
+function DrawMatrixRain() {
+
+    if (!MatrixRainActive) {
+        MatrixRainContext.clearRect(0, 0, MatrixRainCanvas.width, MatrixRainCanvas.height);
+        return
+    }
+
+    MatrixRainContext.fillStyle = 'rgba(0, 0, 0, .1)';
+    MatrixRainContext.fillRect(0, 0, MatrixRainCanvas.width, MatrixRainCanvas.height);
+
+    for (var i = 0; i < Drops.length; i++) {
+
+        var Text = Letters[Math.floor(Math.random() * Letters.length)];
+
+        MatrixRainContext.fillStyle = '#0f0';
+        MatrixRainContext.fillText(Text, i * 10, Drops[i] * 10);
+        Drops[i]++;
+
+        if (Drops[i] * 10 > MatrixRainCanvas.height && Math.random() > .95) {
+            Drops[i] = 0;
+        }
+    }
+}
+
+MatrixRainCanvas.addEventListener("mouseover", function () {
+    MatrixRainActive = true
+    MatrixRainContainer.style.scale = 1.2;
+    MatrixRainText.style.transform = `translateY(70px)`;
+});
+
+MatrixRainCanvas.addEventListener("mouseout", function () {
+    MatrixRainActive = false
+    MatrixRainContainer.style.scale = 1;
+    MatrixRainText.style.transform = `translateY(0px)`;
+});
+
+setInterval(DrawMatrixRain, 33);
