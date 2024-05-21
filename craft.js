@@ -48,6 +48,18 @@ function Combine(Item1, Item2) {
         ["Rain", "Ash", "Smoke"],
         ["Obsidian", "Fire", "Lava"],
         ["Obsidian", "Volcano", "Lava"],
+        ["Rain", "Earth", "Grass"],
+        ["Water", "Mud", "Swamp"],
+        ["Rain", "Mud", "Bog"],
+        ["Fire", "Grass", "Ash"],
+        ["Grass", "Earth", "Tree"],
+        ["Mud", "Fire", "Brick"],
+        ["Water", "Dust", "Sand"],
+        ["Water", "Sand", "Beach"],
+        ["Sand", "Fire", "Glass"],
+        ["Glass", "Brick", "House"],
+        ["Cloud", "Rain", "Storm"],
+        ["Storm", "Fire", "Lightning"],
     ];
 
     for (let i = 0; i < Combinations.length; i++) {
