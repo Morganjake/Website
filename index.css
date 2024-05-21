@@ -136,6 +136,20 @@
 }
 
 #MatrixRainText {
-    left: 50px;
+    left: 53px;
     background-image: linear-gradient(to bottom, blue, pink); 
+}
+
+/**********************************/
+/*          FINITE CRAFT          */  
+/**********************************/
+
+#FiniteCraft {
+    display: block;
+    background-color: #0F0F0F;
+}
+
+#FiniteCraftText {
+    left: 53px;
+    background-image: linear-gradient(to top, gray, black); 
 }

@@ -43,9 +43,8 @@ function onYouTubeIframeAPIReady() {
 
     VideoUrls.forEach(function (VideoUrl) {
         var VideoDiv = document.createElement("div");
-        var IsBackgroundVideo = VideoUrl == "fu2gdoP8AFk" || VideoUrl == "7Ge7Ajbzc0U";
 
-        if (IsBackgroundVideo) { // Seperate code for the background videos
+        if (VideoUrl == "fu2gdoP8AFk" || VideoUrl == "7Ge7Ajbzc0U") { // Seperate code for the background videos
             Body = document.getElementById("Body");
             VideoDiv.id = `Video ${VideoCount}`;
             VideoDiv.className = `Background`
