@@ -42,7 +42,7 @@ function Combine(Item1, Item2) {
         ["Fire", "Air", "Smoke"],
         ["Fire", "Earth", "Volcano"],
         ["Earth", "Air", "Dust"],
-        ["Cloud", "Water", "Rain"]
+        ["Cloud", "Water", "Rain"],
         ["Fire", "Dust", "Ash"],
         ["Mud", "Rain", "Bog"],
         ["Rain", "Ash", "Smoke"],
