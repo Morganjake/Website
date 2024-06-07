@@ -7,9 +7,11 @@ var DraggedItemOffsetX = 0;
 var DraggedItemOffsetY = 0;
 var DiscoveredItems = ["Water", "Fire", "Earth", "Air"]
 
+// ChatGPT generated this code but it checks if elements are overlapping
 function IsOverlapping(Item1, Item2) {
     var Rect1 = Item1.getBoundingClientRect()
     var Rect2 = Item2.getBoundingClientRect()
+
     return !(
         Rect1.right < Rect2.left || 
         Rect1.left > Rect2.right || 
@@ -19,6 +21,7 @@ function IsOverlapping(Item1, Item2) {
 }
 
 
+// Compares both materials against the Item labels
 function CanCombine(Item1, Item2, Material1, Material2) {
 
     if (Item1.innerHTML == Material1 && Item2.innerHTML == Material2) {
@@ -35,6 +38,7 @@ function CanCombine(Item1, Item2, Material1, Material2) {
 
 function Combine(Item1, Item2) {
 
+    // List of all possible combinations (index 0 and 1 are the ingredients, index 2 is the product)
     const Combinations = [
         ["Water", "Fire", "Obsidian"],
         ["Water", "Earth", "Mud"],
@@ -62,6 +66,7 @@ function Combine(Item1, Item2) {
         ["Storm", "Fire", "Lightning"],
     ];
 
+    // Loops through the combinations to see if it exists
     for (let i = 0; i < Combinations.length; i++) {
         if (CanCombine(Item1, Item2, Combinations[i][0], Combinations[i][1])) {
             Item1.remove()
@@ -76,19 +81,21 @@ function Combine(Item1, Item2) {
 }
 
 
+// Adds the item to the item list
 function AddItemToList(ItemName) {
     var Item = document.createElement("div")
-    Item.classList.add('Item');
+    Item.classList.add("Item");
     Item.innerHTML = ItemName
     InnerItemList.appendChild(Item);
     DiscoveredItems.push(ItemName)
 }
 
 
+// Creates the selected item on the board
 document.body.addEventListener("click", function(event) {
     if (event.target.classList.contains("Item") && !event.target.classList.contains("OnBoard")) {
         var Item = event.target.cloneNode(true);
-        Item.classList.add('OnBoard');
+        Item.classList.add("OnBoard");
         var Rect = Board.getBoundingClientRect()
         var XPos = Rect.width / 4 + (Rect.width - Rect.width / 2) * Math.random();
         var YPos = Rect.height / 4 + (Rect.height - Rect.height / 2) * Math.random();
@@ -99,6 +106,7 @@ document.body.addEventListener("click", function(event) {
 });
 
 
+// Checks if you have clicked on an item
 document.body.addEventListener("mousedown", function(event) {
     if (event.target.classList.contains("Item")) {
         Dragging = true;
@@ -109,6 +117,7 @@ document.body.addEventListener("mousedown", function(event) {
 });
 
 
+// Keeps the selected item at the mouse position
 document.body.addEventListener("mousemove", function(event) {
     if (Dragging) {
         DraggedItem.style.left = `${event.clientX - DraggedItemOffsetX}px`;
@@ -121,12 +130,14 @@ document.body.addEventListener("mouseup", function(event) {
     Dragging = false;
     DraggedItem = null;
 
+    // Deletes it if it is over the item list
     if (event.target.classList.contains("OnBoard")) {
         if (IsOverlapping(ItemList, event.target)) {
             event.target.remove();
             return;
         }
 
+        // Tries to combine the selected item with all the overlapping items
         var AllItems = Board.children;
         for (let i = 0; i < AllItems.length; i++) {
             if (AllItems[i] != event.target && IsOverlapping(AllItems[i], event.target)) {
