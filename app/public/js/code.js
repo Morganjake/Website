@@ -1,4 +1,3 @@
-
 function changeTab(newTab) {
 	Array.from(document.getElementsByClassName("tab")).forEach(tab => {
 		tab.id = tab.innerHTML == newTab ? "selected" : "";
@@ -12,6 +11,10 @@ function changeTab(newTab) {
 const editor = document.getElementById('code-input');
 const btn = document.getElementById('submit-button');
 
+const ouputOutput = document.getElementById("output-output")
+const tokensOutput = document.getElementById("tokens-output")
+const astOutput = document.getElementById("ast-output")
+
 btn.addEventListener("click", async () => {
 	btn.disabled = true;
 	btn.textContent = "Sending…";
@@ -23,10 +26,15 @@ btn.addEventListener("click", async () => {
 		});
 
 		const data = await res.json();
+		ouputOutput.innerHTML = data.Output
+		tokensOutput.innerHTML = data.Tokens
+		astOutput.innerHTML = data.Ast
 		console.log("Response:", data);
-	} catch (err) {
+	} 
+	catch (err) {
 		console.error("Error:", err);
-	} finally {
+	}
+	finally {
 		btn.disabled = false;
 		btn.textContent = "Submit Code";
 	}

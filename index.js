@@ -1,3 +1,5 @@
+let interfaceWithC = require("./backend/codingLanguage/interfaceWithC")
+
 const express = require('express');
 const app = express();
 const port = 4000;
@@ -16,10 +18,10 @@ app.get('/code', (req, res) => {
 	res.render("code")
 });
 
-app.post('/api/submit', (req, res) => {
+app.post('/api/submit', async (req, res) => {
 	const { text } = req.body;
-	console.log('Received:', text);
-	res.json({ ok: true });
+	let ans = await interfaceWithC.interfaceWithC(text)
+	res.json(ans);
 });
 
 app.listen(port, () => {
