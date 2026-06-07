@@ -137,7 +137,34 @@ body {
 
 			.output {
 				padding: 20px;
-				color: rgb(230, 230, 230);;
+				color: rgb(230, 230, 230);
+				overflow-y: auto;
+				max-height: calc(100vh - 150px);
+
+				p {
+					margin-block: 5px;
+				}
+			}
+
+			#tokens-output {
+
+				white-space: pre;
+
+				#line-number {
+					font-size: 15px;
+				}
+
+				p {
+					margin-block: 5px;
+					
+					tokenType {
+						color: rgb(60, 130, 220);
+					}
+
+					tokenValue {
+						color: rgb(60, 220, 80);
+					}
+				}
 			}
 		}
 	}
