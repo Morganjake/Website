@@ -11,6 +11,7 @@
                 "${fileDirname}\\headers",
                 "${file}",
                 "${fileDirname}\\frontend\\tokenizer.c",
+                "${fileDirname}\\frontend\\ast.c",
                 "${fileDirname}\\utils\\output.c",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"

@@ -1,4 +1,4 @@
-#include "../Headers/Token.h"
+#include "Token.h"
 
 #ifndef TOKENIZER_H
 #define TOKENIZER_H

@@ -1,2 +1,2 @@
-main.exe def main() {     print("Hello World"); }
+main.exe a = 5 * 5 + 5;
 PAUSE

@@ -2,21 +2,24 @@ const path = require("path");
 const { exec } = require("child_process");
 const { resolve } = require("dns");
 
+
 function formatforOutput(res) {
     return res;
 }
 
+
 function formatforTokens(tokens, lines) {
     let res = ['<p id="line-number">Line 1: ' + lines[0] + '</p>'];
     let curLine = 1;
+
     for (let i = 0; i < tokens.length; i += 2) {
 
         let line = '<p><tokenType> - ' + tokens[i] + ':</tokenType>'
-        // Yeah 47 is a magic number, but it represents of "line" using the longest token type, and there isn't really a nicer way to simply do it 
-        line += " ".repeat(3 + Math.max(47 - line.length, 0)) + '<tokenValue>' + tokens[i + 1] +'</tokenValue></p>';
+        // Yeah 49 is a magic number, but it represents the length of "line" using the longest token type, and there isn't really a nicer way to simply do it 
+        line += " ".repeat(3 + Math.max(49 - line.length, 0)) + '<tokenValue>' + tokens[i + 1] +'</tokenValue></p>';
         res.push(line);
 
-        if (tokens[i] == "EOLToken" && i + 2 < tokens.length) {
+        if (tokens[i] == "EOL Token" && i + 2 < tokens.length) {
             curLine++;
             res.push(['<br><p id="line-number">Line ' + curLine + ': ' + lines[curLine - 1] + '</p>']);
         }
@@ -25,9 +28,20 @@ function formatforTokens(tokens, lines) {
     return res.join("");
 }
 
-function formatforAst(res) {
-    return res;
+function formatforAst(lines) {
+    let res = [];
+    for (let i = 0; i < lines.length; i += 3) {
+        let line = "<p>";
+        
+        if (Number(lines[i]) > 0) { line += "<nodeLine>" + "│ ".repeat(Number(lines[i]) - 1) + "├ </nodeLine>";  }
+        else if (i != 0) { line += "<br>"; }
+
+        line += "<nodeType>" + lines[i + 1] + ":</nodeType> " + lines[i + 2] + "</p>";
+        res.push(line);
+    }
+    return res.join("");
 }
+
 
 module.exports = {
     
