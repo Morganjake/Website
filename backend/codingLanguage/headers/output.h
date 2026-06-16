@@ -4,7 +4,7 @@
 #define OUTPUT_H
 
 void outputTokens(struct Tokens* allTokens, int lineCount);
-void outputAST();
+void outputAst(struct AstNode* allAsts, int lineCount, int indentLevel);
 void outputOutput();
 
 #endif

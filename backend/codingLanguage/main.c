@@ -5,7 +5,10 @@
 
 #include "headers/token.h"
 #include "headers/tokenizer.h"
+#include "headers/ast.h"
+#include "headers/astNode.h"
 #include "headers/output.h"
+
 
 int main(int argc, char *argv[]) {
 
@@ -59,18 +62,25 @@ int main(int argc, char *argv[]) {
     }
 
     struct Tokens* allTokens = malloc(sizeof(struct Tokens) * lineCount);
+    struct AstNode* allAsts = malloc(sizeof(struct AstNode) * lineCount);
 
     for (int i = 0; i < lineCount; i++) {
         struct Tokens tokens = tokenizeLine(lines[i]);
         allTokens[i] = tokens;
         free(lines[i]);
     }
-
+    
     outputTokens(allTokens, lineCount);
-    outputAST();
+
+    for (int i = 0; i < lineCount; i++) {
+        allAsts[i] = createAST(allTokens[i], 0);
+    }
+
+    outputAst(allAsts, lineCount, 0);
     outputOutput();
     
     free(allTokens);
+    free(allAsts);
 
     free(text);
     free(curLine);

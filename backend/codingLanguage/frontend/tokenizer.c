@@ -56,7 +56,9 @@ struct Tokens tokenizeLine(char* line) {
 
     while (i < strlen(line)) {
 
-        if (line[i] == ' ') { i++; }
+        if (line[i] == ' ') {
+            i++;
+        }
         else if (isAlphabetic(line[i])) {
 
             while (isAlphanumeric(line[i]) || line[i] == '_') {
@@ -65,7 +67,12 @@ struct Tokens tokenizeLine(char* line) {
                 i++;
             }
             tokensBuffer[TokenBufferLocation] = '\0';
-            updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, VariableToken);
+            if (i < strlen(line) && line[i] == '(') {
+                updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, FunctionToken);
+            }
+            else {
+                updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, VariableToken);
+            }
         }
         else if (isNumeric(line[i])) {
 
@@ -100,9 +107,14 @@ struct Tokens tokenizeLine(char* line) {
             updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, AssignmentToken);
             i++;
         }
-        else if (line[i] == '+' || line[i] == '-' || line[i] == '*' || line[i] == '/') {
+        else if (line[i] == '+' || line[i] == '-' || line[i] == '*' || line[i] == '\\') { // Yeah the divisor is flipped for C reasons
             tokensBuffer[0] = line[i];
             updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, MathOperatorToken);
+            i++;
+        }
+        else if (line[i] == ',') {
+            tokensBuffer[0] = line[i];
+            updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, CommaToken);
             i++;
         }
         else if (line[i] == ';') {

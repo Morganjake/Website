@@ -1,20 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../headers/Token.h"
+#include "../headers/token.h"
+#include "../headers/astNode.h"
 
 
 void outputTokens(struct Tokens* allTokens, int lineCount) {
 
     char* tokenTypeNames[] = {
-        "VariableToken",
-        "AssignmentToken",
-        "NullToken",
-        "IntegerToken",
-        "StringToken",
-        "BracketToken",
-        "MathOperatorToken",
-        "EOLToken"
+        "EOL Token",
+        "Variable Token",
+        "Null Token",
+        "Integer Token",
+        "String Token",
+        "Assignment Token",
+        "Bracket Token",
+        "Math Operator Token",
+        "Function Token",
+        "Comma Token"
     };
 
     for (int i = 0; i < lineCount; i++) {
@@ -29,9 +32,33 @@ void outputTokens(struct Tokens* allTokens, int lineCount) {
 }
 
 
-void outputAST() {
-    printf("This is the Abstract Syntax Tree.\n");
-    printf("END OF AST\n");
+void outputAst(struct AstNode* allAsts, int lineCount, int indentLevel) {
+
+    char *astNodeTypeNames[] = {
+        "Empty Node",
+        "Value",
+        "Variable Node",
+        "Assignment Node",
+        "Math Operator",
+        "Function Node"
+    };
+    
+    for (int i = 0; i < lineCount; i++) {
+        struct AstNode ast = allAsts[i];
+        
+        if (ast.type == ValueNode && ast.token.tokenType == StringToken) {
+            printf("%d\n%s\n\"%s\"\n", indentLevel, astNodeTypeNames[ast.type], ast.token.value);
+        }
+        else {
+            printf("%d\n%s\n%s\n", indentLevel, astNodeTypeNames[ast.type], ast.token.value);
+        }
+
+        for (int k = 0; k < ast.childNodeCount; k++) {
+            outputAst(&ast.childNodes[k], 1, indentLevel + 1);
+        }
+    }
+
+    if (indentLevel == 0) { printf("END OF AST\n"); }
 }
 
 

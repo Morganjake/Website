@@ -2,14 +2,16 @@
 #define TOKENTYPES_H
 
 enum TokenType {
+    EOLToken,
     VariableToken,
-    AssignmentToken,
     NullToken,
     IntegerToken,
     StringToken,
+    AssignmentToken,
     BracketToken,
     MathOperatorToken,
-    EOLToken
+    FunctionToken,
+    CommaToken
 };
 
 struct Token {
