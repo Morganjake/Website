@@ -12,6 +12,7 @@ const editor = document.getElementById('code-input');
 const btn = document.getElementById('submit-button');
 
 const ouputOutput = document.getElementById("output-output")
+const variablesOutput = document.getElementById("variables-output")
 const tokensOutput = document.getElementById("tokens-output")
 const astOutput = document.getElementById("ast-output")
 
@@ -27,6 +28,7 @@ btn.addEventListener("click", async () => {
 
 		const data = await res.json();
 		ouputOutput.innerHTML = data.Output
+		variablesOutput.innerHTML = data.Variables
 		tokensOutput.innerHTML = data.Tokens
 		astOutput.innerHTML = data.Ast
 		console.log("Response:", data);

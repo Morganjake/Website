@@ -5,7 +5,6 @@
 
 #include "../headers/token.h"
 #include "../headers/astNode.h"
-#include "../headers/output.h"
 
 struct AstNodes {
     struct AstNode* nodes;
@@ -56,23 +55,22 @@ struct AstNodes createASTArray(struct Tokens tokens, int startIndex) {
             case MathOperatorToken: node.type = MathOperatorNode; break;
             case FunctionToken:
                 node.type = FunctionNode;
-                i += 2; // Skip function and bracket token (if a function token exists it is always followed by an open bracket)
-                int argStart = i;
+                i += 1; // Skip function and bracket token (if a function token exists it is always followed by an open bracket)
+                int argStart = i + 1;
                 bracketCount = 1;
-
                 while (bracketCount != 0 && i < tokens.tokenCount) {
+                    i++;
                     if (tokens.tokens[i].tokenType == BracketToken && strcmp(tokens.tokens[i].value, "(") == 0) { bracketCount++; }
                     if (tokens.tokens[i].tokenType == BracketToken && strcmp(tokens.tokens[i].value, ")") == 0) { bracketCount--; }
                     if (tokens.tokens[i].tokenType == CommaToken || bracketCount == 0) {
+                        if (argStart == i) { break; } // Means the function has no arguments
                         struct AstNode arg = createAST((struct Tokens) {tokens.tokens, i}, argStart);
                         node.childNodes = realloc(node.childNodes, sizeof(struct AstNode) * (node.childNodeCount + 1));
                         node.childNodes[node.childNodeCount] = arg;
                         node.childNodeCount += 1;
                         argStart = i + 1;
                     }
-                    i++;
                 }
-
                 break;
         }
 
