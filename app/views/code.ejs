@@ -15,9 +15,6 @@
                     <div id="number-column">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14</div>
                     <div id="code-input-container">
                         <textarea id="code-input">
-a = 10;
-print("The value of a + 5 is: ");
-print(a + 5);
                         </textarea>
                     </div>
                 </div>
@@ -36,12 +33,14 @@ print(a + 5);
             <div id="info">
                 <div id="tabs">
                     <button class="tab" onclick="changeTab('Output')" id="selected">Output</button>
+                    <button class="tab" onclick="changeTab('Variables')">Variables</button>
                     <button class="tab" onclick="changeTab('Tokens')">Tokens</button>
                     <button class="tab" onclick="changeTab('AST')">AST</button>
                     <button class="tab" onclick="changeTab('Docs')">Docs</button>
                     <button class="tab" onclick="changeTab('Logs')">Logs</button>
                 </div>
-                <div class="output" id="output-output" >Output</div>
+                <div class="output" id="output-output">Output</div>
+                <div class="output" id="variables-output" hidden="true">Variables</div>
                 <div class="output" id="tokens-output" hidden="true">Tokens</div>
                 <div class="output" id="ast-output" hidden="true">Abstract Syntax Tree</div>
                 <div class="output" id="docs-output" hidden="true">Docs</div>

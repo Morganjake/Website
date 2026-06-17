@@ -7,7 +7,13 @@
 #include "headers/tokenizer.h"
 #include "headers/ast.h"
 #include "headers/astNode.h"
+#include "headers/variable.h"
+#include "headers/parse.h"
 #include "headers/output.h"
+
+#include "parser/parserHeaders/functionCaller.h"
+
+#define VAR_OUTPUT_ID 1
 
 
 int main(int argc, char *argv[]) {
@@ -63,6 +69,8 @@ int main(int argc, char *argv[]) {
 
     struct Tokens* allTokens = malloc(sizeof(struct Tokens) * lineCount);
     struct AstNode* allAsts = malloc(sizeof(struct AstNode) * lineCount);
+    struct Variables variables = (struct Variables) {malloc(0), 0};
+
 
     for (int i = 0; i < lineCount; i++) {
         struct Tokens tokens = tokenizeLine(lines[i]);
@@ -77,10 +85,17 @@ int main(int argc, char *argv[]) {
     }
 
     outputAst(allAsts, lineCount, 0);
-    outputOutput();
-    
+
+    for (int i = 0; i < lineCount; i++) {
+        parseNode(allAsts[i], &variables);
+    }
+
+    outputVars(variables);
+
+
     free(allTokens);
     free(allAsts);
+    free(variables.variables);
 
     free(text);
     free(curLine);

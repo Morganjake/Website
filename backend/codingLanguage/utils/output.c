@@ -60,8 +60,3 @@ void outputAst(struct AstNode* allAsts, int lineCount, int indentLevel) {
 
     if (indentLevel == 0) { printf("END OF AST\n"); }
 }
-
-
-void outputOutput() {
-    printf("This is the final output.\n");
-}

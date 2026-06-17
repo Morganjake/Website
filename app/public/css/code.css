@@ -146,6 +146,10 @@ body {
                 }
             }
 
+            #variables-output {
+                white-space: pre;
+            }
+
             #tokens-output {
 
                 white-space: pre;

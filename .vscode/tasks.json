@@ -13,6 +13,13 @@
                 "${fileDirname}\\frontend\\tokenizer.c",
                 "${fileDirname}\\frontend\\ast.c",
                 "${fileDirname}\\utils\\output.c",
+                "${fileDirname}\\parser\\parser.c",
+                "${fileDirname}\\parser\\typeConverter.c",
+                "${fileDirname}\\parser\\arithmetic.c",
+                "${fileDirname}\\parser\\functionCaller.c",
+                "${fileDirname}\\parser\\parserHeaders\\typeConverter.h",
+                "${fileDirname}\\parser\\parserHeaders\\arithmetic.h",
+                "${fileDirname}\\parser\\parserHeaders\\functionCaller.h",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
