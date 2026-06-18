@@ -4,6 +4,7 @@ function changeTab(newTab) {
 	});
 
 	Array.from(document.getElementsByClassName("output")).forEach(tab => {
+		console.log(tab)
 		tab.hidden = tab.id != newTab.toLowerCase() + "-output";
 	});
 }

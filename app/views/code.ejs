@@ -39,12 +39,33 @@
                     <button class="tab" onclick="changeTab('Docs')">Docs</button>
                     <button class="tab" onclick="changeTab('Logs')">Logs</button>
                 </div>
-                <div class="output" id="output-output">Output</div>
-                <div class="output" id="variables-output" hidden="true">Variables</div>
-                <div class="output" id="tokens-output" hidden="true">Tokens</div>
-                <div class="output" id="ast-output" hidden="true">Abstract Syntax Tree</div>
+                <div class="output" id="output-output">Run code to get an output</div>
+                <div class="output" id="variables-output" hidden="true">Run code to see the variables</div>
+                <div class="output" id="tokens-output" hidden="true">Run code to see the tokens</div>
+                <div class="output" id="ast-output" hidden="true">Run code to see the abstract syntax tree</div>
                 <div class="output" id="docs-output" hidden="true">Docs</div>
-                <div class="output" id="logs-output" hidden="true">Logs</div>
+                <div class="output" id="logs-output" hidden="true">
+                    <% updateLog.forEach(log => { %>
+                        <div class="update-log">
+                            <div class="log-bar"></div>
+                            <div>
+                                <div class="log-version"><%= log.version%></div>
+                                <div class="log-date"><%= log.date%></div>
+                                <ul class="log-container">
+                                    <% log.additions.forEach(addition => { %>
+                                        <li class="log-addition"><%= addition%></li>
+                                    <% }) %>
+                                    <% log.changes.forEach(change => { %>
+                                        <li class="log-change"><%= change%></li>
+                                    <% }) %>
+                                    <% log.removals.forEach(removal => { %>
+                                        <li class="log-removal"><%= removal%></li>
+                                    <% }) %> 
+                                    </ul>                      
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
             </div>
         </div>
         <script src="/js/code.js"></script>
