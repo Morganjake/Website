@@ -36,6 +36,7 @@ struct AstNodes createASTArray(struct Tokens tokens, int startIndex) {
                 node.type = AssignmentNode;
                 struct AstNode variableName = buildAST((struct AstNodes) {nodes, nodeCount});
                 struct AstNode value = createAST(tokens, i + 1);
+                break;
 
                 if (variableName.type != VariableNode) {
                     error("Syntax Error: Only variables can be assigned to");
@@ -110,7 +111,7 @@ void removeASTNode(struct AstNodes* astNodes, int index) {
 
 struct AstNode createAST(struct Tokens tokens, int startIndex) {
     struct AstNodes astNodes = createASTArray(tokens, startIndex);
-    return astNodes.nodeCount == 1 ? astNodes.nodes[0] : buildAST(astNodes);
+    return buildAST(astNodes);
 }
 
 
@@ -158,7 +159,7 @@ struct AstNode buildAST(struct AstNodes astNodes) {
     }
 
     if (astNodes.nodeCount != 1) {
-        error("Syntax Error");
+        error("Syntax Error: Invalid syntax");
     }
 
     return astNodes.nodes[0];

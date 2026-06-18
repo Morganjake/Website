@@ -1,2 +1,2 @@
-main.exe a = 5 * 5 + 5;
+main.exe a = +;
 PAUSE
