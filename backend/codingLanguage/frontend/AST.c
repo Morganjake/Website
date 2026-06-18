@@ -36,7 +36,6 @@ struct AstNodes createASTArray(struct Tokens tokens, int startIndex) {
                 node.type = AssignmentNode;
                 struct AstNode variableName = buildAST((struct AstNodes) {nodes, nodeCount});
                 struct AstNode value = createAST(tokens, i + 1);
-                break;
 
                 if (variableName.type != VariableNode) {
                     error("Syntax Error: Only variables can be assigned to");
