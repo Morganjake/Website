@@ -3,7 +3,7 @@
         {
             "version": "v0.0.1 - Initial version",
             "date": "2026-06-17",
-            "additions": ["Intial version with integers, strings, maths, and a standard library the consists of the print function"],
+            "additions": ["Intial version with integers, strings, maths, and a standard library that consists of the print function"],
             "changes": [],
             "removals": []
         }

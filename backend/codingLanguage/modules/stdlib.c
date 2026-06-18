@@ -18,7 +18,7 @@ struct Value print(struct Values args) {
             printf("%s", (char*) val.valuePtr);
         }
 
-        printf(i != args.count - 1 ? "," : "\n");
+        printf(i != args.count - 1 ? ", " : "\n");
     }
 
     return returnInt(1);
