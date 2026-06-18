@@ -6,6 +6,7 @@ enum TokenType {
     VariableToken,
     NullToken,
     IntegerToken,
+    FloatToken,
     StringToken,
     AssignmentToken,
     BracketToken,
