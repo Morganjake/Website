@@ -73,20 +73,22 @@ int main(int argc, char *argv[]) {
 
 
     for (int i = 0; i < lineCount; i++) {
+        globalLine = lines[i];
         struct Tokens tokens = tokenizeLine(lines[i]);
         allTokens[i] = tokens;
-        free(lines[i]);
     }
     
     outputTokens(allTokens, lineCount);
 
     for (int i = 0; i < lineCount; i++) {
+        globalLine = lines[i];
         allAsts[i] = createAST(allTokens[i], 0);
     }
 
     outputAst(allAsts, lineCount, 0);
 
     for (int i = 0; i < lineCount; i++) {
+        globalLine = lines[i];
         parseNode(allAsts[i], &variables);
     }
 

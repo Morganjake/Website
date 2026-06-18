@@ -3,6 +3,8 @@
 #include <string.h>
 
 #include "../headers/variable.h"
+#include "../headers/output.h"
+
 #include "../modules/stdlib.c"
 
 #define STD_OUTPUT_ID 0
@@ -23,6 +25,8 @@ struct Value returnString(char* s) {
 }
 
 
+// Outputs the variables for the frontend
+// It's here so I can use the print function without needing an stdlib header file
 void outputVars(struct Variables variables) {
     for (int i = 0; i < variables.variableCount; i++) {
         printf("%d", VAR_OUTPUT_ID);
@@ -41,5 +45,12 @@ struct Value callFunction(char* functionName, struct Values args) {
     if (strcmp(functionName, "print") == 0) {
         printf("%d", STD_OUTPUT_ID);
         return print(args);
+    }
+    else {
+        char* errMessage = malloc(sizeof(char) * (strlen("Function Error: unkown function \"") + strlen(functionName) + 4));
+        strcpy(errMessage, "Function Error: unkown function \"");
+        strcat(errMessage, functionName);
+        strcat(errMessage, "()\"");
+        error(errMessage);
     }
 }

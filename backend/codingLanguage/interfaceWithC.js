@@ -3,17 +3,18 @@ const { exec } = require("child_process");
 const { resolve } = require("dns");
 
 
-function formatforOutput(output) {
-    return output.join("<br>");
+function formatforOutput(output, error) {
+    return output.join("<br>") +  "<error>" + error.join("<br>") + "</error>";
 }
 
 
 function formatforVariable(vars) {
-    return "{<br>   " + vars.slice(0, -1).join("<br>   ") + "<br>}";
+    return "{<br>   " + vars.join("<br>   ") + "<br>}";
 }
 
 
 function formatforTokens(tokens, lines) {
+    if (!tokens) { return ""; }
     let res = ['<p id="line-number">Line 1: ' + lines[0] + '</p>'];
     let curLine = 1;
 
@@ -70,29 +71,21 @@ module.exports = {
 
         res = res.split("\r\n");
         
-        parts = [[], [], [], []]
-        curPart = 0;
+        parts = [[], [], [], [], []]
 
         for (let i = 0; i < res.length; i++) {
-            if (curPart < 2 && (res[i] == "END OF TOKENS" || res[i] == "END OF AST")) {
-                curPart++;
-            }
-            else {
-                if (curPart == 2) {
-                    if (res[i][0] == "0") { parts[2].push(res[i].slice(1)) }
-                    else { parts[3].push(res[i].slice(1)) }
-                }
-                else {
-                    parts[curPart].push(res[i]);
-                }
-            }
+            if (res[i][0] == "0") { parts[0].push(res[i].slice(1)) }
+            else if (res[i][0] == "1") { parts[1].push(res[i].slice(1)) }
+            else if (res[i][0] == "2") { parts[2].push(res[i].slice(1)) }
+            else if (res[i][0] == "3") { parts[3].push(res[i].slice(1)) }
+            else if (res[i][0] == "4") { parts[4].push(res[i].slice(1)) }
         }
 
         return {
-            "Output": formatforOutput(parts[2]),
-            "Variables": formatforVariable(parts[3]),
-            "Tokens": formatforTokens(parts[0], lines),
-            "Ast": formatforAst(parts[1])
+            "Output": formatforOutput(parts[0], parts[2]),
+            "Variables": formatforVariable(parts[1]),
+            "Tokens": formatforTokens(parts[3], lines),
+            "Ast": formatforAst(parts[4])
         };
     }
 } 

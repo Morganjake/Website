@@ -5,6 +5,7 @@
 
 #include "../headers/token.h"
 #include "../headers/astNode.h"
+#include "../headers/output.h"
 
 struct AstNodes {
     struct AstNode* nodes;
@@ -35,6 +36,14 @@ struct AstNodes createASTArray(struct Tokens tokens, int startIndex) {
                 node.type = AssignmentNode;
                 struct AstNode variableName = buildAST((struct AstNodes) {nodes, nodeCount});
                 struct AstNode value = createAST(tokens, i + 1);
+
+                if (variableName.type != VariableNode) {
+                    error("Syntax Error: Only variables can be assigned to");
+                }
+                else if (value.type == EmptyNode) {
+                    error("Syntax Error: Variable needs value to be assigned");
+                }
+
                 node.childNodes = malloc(sizeof(struct AstNode) * 2);
                 node.childNodeCount = 2;
                 node.childNodes[0] = variableName;
@@ -110,6 +119,14 @@ struct AstNode buildAST(struct AstNodes astNodes) {
         struct AstNode node = astNodes.nodes[i];
         if (node.childNodeCount != 0) { continue; } // If the node already has children it has already been built and should be a sub-node
         if (node.type == MathOperatorNode && (strcmp(node.token.value, "*") == 0 || strcmp(node.token.value, "\\") == 0)) {
+
+            if (i == 0 || astNodes.nodes[i - 1].type == EmptyNode) { // If i is 0 there is nothing to the left of the operator
+                error("Syntax Error: Operator missing left operand");
+            }
+            else if (i == astNodes.nodeCount - 1 || astNodes.nodes[i + 1].type == EmptyNode) {
+                error("Syntax Error: Operator missing right operand");
+            }
+
             node.childNodes = malloc(sizeof(struct AstNode) * 2);
             node.childNodeCount = 2;
             node.childNodes[0] = astNodes.nodes[i - 1]; node.childNodes[1] = astNodes.nodes[i + 1];
@@ -123,6 +140,14 @@ struct AstNode buildAST(struct AstNodes astNodes) {
         struct AstNode node = astNodes.nodes[i];
         if (node.childNodeCount != 0) { continue; } // If the node already has children it has already been built and should be a sub-node
         if (node.type == MathOperatorNode && (strcmp(node.token.value, "+") == 0 || strcmp(node.token.value, "-") == 0)) {
+
+            if (i == 0 || astNodes.nodes[i - 1].type == EmptyNode) { // If i is 0 there is nothing to the left of the operator
+                error("Syntax Error: Operator missing left operand");
+            }
+            else if (i == astNodes.nodeCount - 1 || astNodes.nodes[i + 1].type == EmptyNode) {
+                error("Syntax Error: Operator missing right operand");
+            }
+
             node.childNodes = malloc(sizeof(struct AstNode) * 2);
             node.childNodeCount = 2;
             node.childNodes[0] = astNodes.nodes[i - 1]; node.childNodes[1] = astNodes.nodes[i + 1];
@@ -130,6 +155,10 @@ struct AstNode buildAST(struct AstNodes astNodes) {
             astNodes.nodes[i - 1] = node;
             i--;
         }
+    }
+
+    if (astNodes.nodeCount != 1) {
+        error("Syntax Error");
     }
 
     return astNodes.nodes[0];

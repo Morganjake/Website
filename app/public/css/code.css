@@ -146,6 +146,13 @@ body {
                 }
             }
 
+            #output-output {
+
+                error {
+                    color: rgb(231, 45, 45);
+                }
+            }
+
             #variables-output {
                 white-space: pre;
             }

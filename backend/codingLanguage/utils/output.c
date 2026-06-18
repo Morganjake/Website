@@ -4,6 +4,11 @@
 #include "../headers/token.h"
 #include "../headers/astNode.h"
 
+#define ERR_OUTPUT_ID 2
+#define TOK_OUTPUT_ID 3
+#define AST_OUTPUT_ID 4
+
+char* globalLine;
 
 void outputTokens(struct Tokens* allTokens, int lineCount) {
 
@@ -24,11 +29,10 @@ void outputTokens(struct Tokens* allTokens, int lineCount) {
         struct Tokens tokens = allTokens[i];
         for (int j = 0; j < tokens.tokenCount; j++) {
             struct Token token = tokens.tokens[j];
-            printf("%s\n", tokenTypeNames[token.tokenType]);
-            printf("%s\n", token.value);
+            printf("%d%s\n", TOK_OUTPUT_ID, tokenTypeNames[token.tokenType]);
+            printf("%d%s\n", TOK_OUTPUT_ID, token.value);
         }
     }
-    printf("END OF TOKENS\n");
 }
 
 
@@ -47,16 +51,21 @@ void outputAst(struct AstNode* allAsts, int lineCount, int indentLevel) {
         struct AstNode ast = allAsts[i];
         
         if (ast.type == ValueNode && ast.token.tokenType == StringToken) {
-            printf("%d\n%s\n\"%s\"\n", indentLevel, astNodeTypeNames[ast.type], ast.token.value);
+            printf("%d%d\n%d%s\n%d\"%s\"\n", AST_OUTPUT_ID, indentLevel, AST_OUTPUT_ID, astNodeTypeNames[ast.type], AST_OUTPUT_ID, ast.token.value);
         }
         else {
-            printf("%d\n%s\n%s\n", indentLevel, astNodeTypeNames[ast.type], ast.token.value);
+            printf("%d%d\n%d%s\n%d%s\n", AST_OUTPUT_ID, indentLevel, AST_OUTPUT_ID, astNodeTypeNames[ast.type], AST_OUTPUT_ID, ast.token.value);
         }
 
         for (int k = 0; k < ast.childNodeCount; k++) {
             outputAst(&ast.childNodes[k], 1, indentLevel + 1);
         }
     }
+}
 
-    if (indentLevel == 0) { printf("END OF AST\n"); }
+
+void error(char* errorMessage) {
+    printf("%d%s\n", ERR_OUTPUT_ID, globalLine);
+    printf("%d%s\n", ERR_OUTPUT_ID, errorMessage);
+    exit(0);
 }
