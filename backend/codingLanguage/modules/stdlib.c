@@ -14,6 +14,9 @@ struct Value print(struct Values args) {
         if (val.type == IntegerType) {
             printf("%d", *val.valuePtr);
         }
+        else if (val.type == FloatType) {
+            printf("%f\n", *(float*) val.valuePtr);
+        }
         else if (val.type == StringType) {
             printf("%s", (char*) val.valuePtr);
         }

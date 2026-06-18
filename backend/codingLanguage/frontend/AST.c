@@ -31,6 +31,7 @@ struct AstNodes createASTArray(struct Tokens tokens, int startIndex) {
             case VariableToken: node.type = VariableNode; break;
             case NullToken: node.type = ValueNode; break;
             case IntegerToken: node.type = ValueNode; break;
+            case FloatToken: node.type = ValueNode; break;
             case StringToken: node.type = ValueNode; break;
             case AssignmentToken:
                 node.type = AssignmentNode;

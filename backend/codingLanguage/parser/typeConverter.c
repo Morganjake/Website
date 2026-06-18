@@ -13,6 +13,11 @@ int* convertTokenToType(struct Token token) {
         *valuePtr = atoi(token.value);
         return valuePtr;
     }
+    else if (token.tokenType == FloatToken) {
+        float* valuePtr = malloc(sizeof(float));
+        *valuePtr = atof(token.value);
+        return (int*) valuePtr;
+    }
     else if (token.tokenType == StringToken) {
         char* valuePtr = malloc((strlen(token.value) + 1) * sizeof(char));
         strcpy(valuePtr, token.value);

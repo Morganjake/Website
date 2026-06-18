@@ -10,9 +10,19 @@
         {
             "version": "v0.1.1 - Added Error Handling",
             "date": "2026-06-18",
-            "additions": ["Addded errors for invalid syntax, and invalid operations to remove unwanted behaviour"],
+            "additions": ["Added errors for invalid syntax, and invalid operations to remove unwanted behaviour"],
             "changes": ["Changed tokenizer to allow for variable names to contains dashes"],
             "removals": []
+        },
+        {
+            "version": "v0.1.2 - Floats",
+            "date": "2026-06-19",
+            "additions": ["Added floats, and float and integer maths."],
+            "changes": [
+                "Made dividing work now (yeah I never checked whoopsy daisy)",
+                "Fixed a bug where an operator with no operands would crash instead of returning an error"
+            ],
+            "removals": ["Removed evil typos"]
         }
     ]
 }

@@ -79,13 +79,19 @@ struct Tokens tokenizeLine(char* line) {
         }
         else if (isNumeric(line[i])) {
 
-            while (isNumeric(line[i])) {
+            bool hasDecimal = false;
+
+            while (isNumeric(line[i]) || line[i] == '.') {
+                if (line[i] == '.') {
+                    if (hasDecimal) { error("Syntax Error: Too many decimal points in float value"); }
+                    hasDecimal = true;
+                }
                 tokensBuffer[TokenBufferLocation] = line[i];
                 TokenBufferLocation++;
                 i++;
             }
             tokensBuffer[TokenBufferLocation] = '\0';
-            updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, IntegerToken);
+            updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, hasDecimal ? FloatToken : IntegerToken);
         }
         else if (line[i] == '"') {
             i++; // Skip the opening quote

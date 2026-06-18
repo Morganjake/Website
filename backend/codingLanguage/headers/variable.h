@@ -4,6 +4,7 @@
 enum dataType {
     NullType,
     IntegerType,
+    FloatType,
     StringType,
 };
 

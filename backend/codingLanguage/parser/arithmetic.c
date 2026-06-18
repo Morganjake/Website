@@ -22,11 +22,52 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
             case '+': *resultPtr = leftValue + rightValue; break;
             case '-': *resultPtr = leftValue - rightValue; break;
             case '*': *resultPtr = leftValue * rightValue; break;
-            case '/': *resultPtr = leftValue / rightValue; break;
+            case '\\': *resultPtr = leftValue / rightValue; break;
         }
 
         res.type = IntegerType;
         res.valuePtr = resultPtr;
+    }
+    else if (leftOperand.type == FloatType && rightOperand.type == FloatType) {
+        float leftValue = *(float*) leftOperand.valuePtr;
+        float rightValue = *(float*) rightOperand.valuePtr;
+
+        float* resultPtr = malloc(sizeof(float));
+
+        switch (operator[0]) {
+            case '+': *resultPtr = leftValue + rightValue; break;
+            case '-': *resultPtr = leftValue - rightValue; break;
+            case '*': *resultPtr = leftValue * rightValue; break;
+            case '\\': *resultPtr = leftValue / rightValue; break;
+        }
+
+        res.type = FloatType;
+        res.valuePtr = (int*) resultPtr;
+    }
+    else if (leftOperand.type == IntegerType && rightOperand.type == FloatType ||
+        leftOperand.type == FloatType && rightOperand.type == IntegerType) {
+
+        float leftValue;
+        float rightValue;
+        if (leftOperand.type == IntegerType && rightOperand.type == FloatType) {
+            leftValue = (float) *leftOperand.valuePtr;
+            rightValue = *(float*) rightOperand.valuePtr;
+        }
+        else {
+            leftValue = *(float*) leftOperand.valuePtr;
+            rightValue = (float) *rightOperand.valuePtr;
+        }
+        float* resultPtr = malloc(sizeof(float));
+
+        switch (operator[0]) {
+            case '+': *resultPtr = leftValue + rightValue; break;
+            case '-': *resultPtr = leftValue - rightValue; break;
+            case '*': *resultPtr = leftValue * rightValue; break;
+            case '\\': *resultPtr = leftValue / rightValue; break;
+        }
+
+        res.type = FloatType;
+        res.valuePtr = (int*) resultPtr;
     }
     else if (leftOperand.type == StringType && rightOperand.type == StringType) {
 
@@ -50,6 +91,7 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
         char *types[] = {
             "Null",
             "Integer",
+            "Float",
             "String",
         };
 
