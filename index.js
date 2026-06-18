@@ -15,7 +15,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/code', (req, res) => {
-	res.render("code")
+	const updateLog = require("./data/code/updateLog.json")
+	res.render("code", { updateLog: updateLog.updates})
 });
 
 app.post('/api/submit', async (req, res) => {

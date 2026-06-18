@@ -184,6 +184,58 @@ body {
                     }
                 }
             }
+
+            #logs-output {
+                list-style: none;
+                display: flex;
+                flex-direction: column-reverse;
+
+                .update-log {
+                    display: flex;
+                    flex-direction: row;
+                    padding-bottom: 20px;
+                    gap: 20px;
+
+                    .log-bar {
+                        background-color: white;
+                        width: 3px;
+                        height: auto;
+                    }
+
+                    .log-version {
+                        font-weight: bolder;
+                    }
+                    
+                    .log-date {
+                        color: rgb(120, 120, 120);
+                    }
+
+                    li::marker {
+                        content: "- ";
+                    }
+
+                    .log-container {
+                        padding-left: 25px;
+                        margin: 0;
+
+                        .log-addition {
+                            color: rgb(90, 180, 90);
+                        }
+
+                        .log-change {
+                            color: rgb(200, 150, 37);
+                        }
+
+                        .log-removal {
+                            color: rgb(200, 40, 40);
+                        }
+                    }
+                }
+            }
+
+            [hidden] {
+                display: none !important;
+            }
         }
     }
 }
