@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "../headers/token.h"
+#include "../headers/output.h"
 
 // Maximum size of a single token
 #define MaxTokenBufferSize 1024 * 8
@@ -54,6 +55,8 @@ struct Tokens tokenizeLine(char* line) {
 
     int i = 0;
 
+    int bracketCount = 0; // Verifies that every opening bracket has a valid corresponding closing bracket
+
     while (i < strlen(line)) {
 
         if (line[i] == ' ') {
@@ -61,7 +64,7 @@ struct Tokens tokenizeLine(char* line) {
         }
         else if (isAlphabetic(line[i])) {
 
-            while (isAlphanumeric(line[i]) || line[i] == '_') {
+            while (isAlphanumeric(line[i]) || line[i] == '_' || line[i] == '-') {
                 tokensBuffer[TokenBufferLocation] = line[i];
                 TokenBufferLocation++;
                 i++;
@@ -97,7 +100,16 @@ struct Tokens tokenizeLine(char* line) {
 
             if (line[i] == '"') { i++; } // Skip the closing quote
         }
-        else if (line[i] == '(' || line[i] == ')' || line[i] == '{' || line[i] == '}') {
+        else if (line[i] == '(' || line[i] == ')') {
+
+            if (line[i] == '(') {
+                bracketCount++;
+            }
+            else if (line[i] == ')') {
+                bracketCount--;
+                if (bracketCount < 0) { error("Syntax Error: Invalid brackets"); }
+            }
+
             tokensBuffer[0] = line[i];
             updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, BracketToken);
             i++;
@@ -126,6 +138,8 @@ struct Tokens tokenizeLine(char* line) {
             i++;
         }
     }
+
+    if (bracketCount > 0) { error("Syntax Error: Invalid brackets"); }
 
     return tokens;
 }

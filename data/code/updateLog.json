@@ -6,6 +6,13 @@
             "additions": ["Intial version with integers, strings, maths, and a standard library that consists of the print function"],
             "changes": [],
             "removals": []
+        },
+        {
+            "version": "v0.0.2 - Added Error Handling",
+            "date": "2026-06-18",
+            "additions": ["Addded errors for invalid syntax, and invalid operations to remove unwanted behaviour"],
+            "changes": ["Changed tokenizer to allow for variable names to contains dashes"],
+            "removals": []
         }
     ]
 }

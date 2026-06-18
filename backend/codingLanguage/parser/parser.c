@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "../headers/token.h"
 #include "../headers/astNode.h"
 #include "../headers/variable.h"
+#include "../headers/output.h"
 
 #include "parserHeaders/typeConverter.h"
 #include "parserHeaders/arithmetic.h"
@@ -18,7 +20,7 @@ struct VariableExistsResult {
 
 
 // Gets a variable from the variable list
-struct VariableExistsResult getVariable(char* name, struct Variables* variablesPtr) {
+struct VariableExistsResult getVariable(char* name, struct Variables* variablesPtr, bool errorIfNotFound) {
 
     for (int i = 0; i < variablesPtr->variableCount; i++) {
         if (strcmp(name, variablesPtr->variables[i].name) == 0) {
@@ -26,7 +28,16 @@ struct VariableExistsResult getVariable(char* name, struct Variables* variablesP
         }
     }
 
-    return (struct VariableExistsResult) {(struct Value) {NullType, NULL}, -1};
+    if (errorIfNotFound) {
+        char* errMessage = malloc(sizeof(char) * (strlen("Variable Error: unkown variable \"") + strlen(name) + 2));
+        strcpy(errMessage, "Variable Error: unkown variable \"");
+        strcat(errMessage, name);
+        strcat(errMessage, "\"");
+        error(errMessage);
+    }
+    else {
+        return (struct VariableExistsResult) {(struct Value) {NullType, NULL}, -1};
+    }
 }
 
 
@@ -42,14 +53,14 @@ struct Value parseNode(struct AstNode node, struct Variables* variablesPtr) {
         return (struct Value) {NullType, NULL};
     }
     else if (node.type == VariableNode) {
-        struct VariableExistsResult res = getVariable(node.token.value, variablesPtr);
+        struct VariableExistsResult res = getVariable(node.token.value, variablesPtr, true);
         return res.index == -1 ? (struct Value) {NullType, NULL} : res.value;
     }
     else if (node.type == AssignmentNode) {
         char* varName = node.childNodes[0].token.value;
         struct Value varValue = parseNode(node.childNodes[1], variablesPtr);
 
-        struct VariableExistsResult res = getVariable(varName, variablesPtr);
+        struct VariableExistsResult res = getVariable(varName, variablesPtr, false);
 
         if (res.index == -1) { // Variable doesn't exist
             
@@ -64,6 +75,13 @@ struct Value parseNode(struct AstNode node, struct Variables* variablesPtr) {
         return varValue;
     }
     else if (node.type == MathOperatorNode) {
+
+        if (node.childNodes[0].type == EmptyNode) {
+            error("Operator missing left operand");
+        }
+        else if (node.childNodes[1].type == EmptyNode) {
+            error("Operator missing right operand");
+        }
 
         struct Value leftOperand = parseNode(node.childNodes[0], variablesPtr);
         struct Value rightOperand = parseNode(node.childNodes[1], variablesPtr);
