@@ -17,11 +17,17 @@ struct Value returnInt(int i) {
     return (struct Value) {IntegerType, resPtr};
 }
 
+struct Value returnFloat(float i) {
+    float* resPtr = malloc(sizeof(float));
+    *resPtr = i;
+    return (struct Value) {FloatType, (int*) resPtr};
+}
+
 
 struct Value returnString(char* s) {
     char* resPtr = malloc((strlen(s) + 1) * sizeof(char));
-    strcpy(s, resPtr);
-    return (struct Value) {IntegerType, (int*) resPtr};
+    strcpy(resPtr, s);
+    return (struct Value) {StringType, (int*) resPtr};
 }
 
 
@@ -46,11 +52,16 @@ struct Value callFunction(char* functionName, struct Values args) {
         printf("%d", STD_OUTPUT_ID);
         return print(args);
     }
+    else if (strcmp(functionName, "int") == 0) {
+        return convertToInt(args);
+    }
+    else if (strcmp(functionName, "float") == 0) {
+        return convertToFloat(args);
+    }
+    else if (strcmp(functionName, "str") == 0) {
+        return convertToStr(args);
+    }
     else {
-        char* errMessage = malloc(sizeof(char) * (strlen("Function Error: unkown function \"") + strlen(functionName) + 4));
-        strcpy(errMessage, "Function Error: unkown function \"");
-        strcat(errMessage, functionName);
-        strcat(errMessage, "()\"");
-        error(errMessage);
+        errorf("Function Error: unkown function \"", functionName, "()\"");
     }
 }
