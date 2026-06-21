@@ -71,7 +71,6 @@ int main(int argc, char *argv[]) {
     struct AstNode* allAsts = malloc(sizeof(struct AstNode) * lineCount);
     struct Variables variables = (struct Variables) {malloc(0), 0};
 
-
     for (int i = 0; i < lineCount; i++) {
         globalLine = lines[i];
         struct Tokens tokens = tokenizeLine(lines[i]);
@@ -93,7 +92,6 @@ int main(int argc, char *argv[]) {
     }
 
     outputVars(variables);
-
 
     free(allTokens);
     free(allAsts);

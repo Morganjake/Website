@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "../headers/token.h"
 #include "../headers/astNode.h"
@@ -69,4 +70,14 @@ void error(char* errorMessage) {
     printf("%d%s\n", ERR_OUTPUT_ID, globalLine);
     printf("%d%s\n", ERR_OUTPUT_ID, errorMessage);
     exit(0);
+}
+
+
+void errorf(char* e1, char* e2, char* e3) {
+    char* errMessage = malloc(sizeof(char) * (strlen(e1) + strlen(e2) + strlen(e3) + 1));
+    strcpy(errMessage, e1);
+    strcat(errMessage, e2);
+    strcat(errMessage, e3);
+    errMessage[strlen(e1) + strlen(e2) + strlen(e3)] = '\0';
+    error(errMessage);
 }

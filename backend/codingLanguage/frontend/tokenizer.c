@@ -141,7 +141,7 @@ struct Tokens tokenizeLine(char* line) {
             i++;
         }
         else {
-            i++;
+            error("Syntax Error: Invalid syntax");
         }
     }
 

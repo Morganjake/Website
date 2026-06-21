@@ -9,5 +9,6 @@ extern char* globalLine;
 void outputTokens(struct Tokens* allTokens, int lineCount);
 void outputAst(struct AstNode* allAsts, int lineCount, int indentLevel);
 void error(char* errorMessage);
+void errorf(char* e1, char* e2, char* e3);
 
 #endif
