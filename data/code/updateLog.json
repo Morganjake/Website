@@ -34,6 +34,16 @@
             ],
             "changes": ["Made all the version names the same case"],
             "removals": []
+        },
+        {
+            "version": "v0.1.3 - To Update Or Not To Update",
+            "date": "2026-06-24",
+            "additions": [
+                "Added booleans",
+                "Added the bool() function"
+            ],
+            "changes": ["Added an 'ending' parameter to the print function (keyword args aren't a thing yet so it's currently only for better code quality right now)"],
+            "removals": ["Removed code slop"]
         }
     ]
 }
