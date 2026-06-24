@@ -31,6 +31,13 @@ struct Value returnString(char* s) {
 }
 
 
+struct Value returnBool(int i) {
+    int* resPtr = malloc(sizeof(int));
+    *resPtr = i;
+    return (struct Value) {BooleanType, resPtr};
+}
+
+
 // Outputs the variables for the frontend
 // It's here so I can use the print function without needing an stdlib header file
 void outputVars(struct Variables variables) {
@@ -38,10 +45,17 @@ void outputVars(struct Variables variables) {
         printf("%d", VAR_OUTPUT_ID);
         printf("%s: ", variables.variables[i].name);
 
-        struct Value* valContainer = malloc(sizeof(struct Values));
+        struct Value* valContainer = malloc(sizeof(struct Value));
         valContainer[0] = variables.variables[i].value;
 
-        print((struct Values) {valContainer, 1});
+        if (variables.variables[i].value.type == StringType) {
+            printf("\"");
+            print((struct Values) {valContainer, 1}, "\"\n");
+        }
+        else {
+            print((struct Values) {valContainer, 1}, "\n");
+        }
+
     } 
 }
 
@@ -50,13 +64,16 @@ struct Value callFunction(char* functionName, struct Values args) {
     
     if (strcmp(functionName, "print") == 0) {
         printf("%d", STD_OUTPUT_ID);
-        return print(args);
+        return print(args, "\n");
     }
     else if (strcmp(functionName, "int") == 0) {
         return convertToInt(args);
     }
     else if (strcmp(functionName, "float") == 0) {
         return convertToFloat(args);
+    }
+    else if (strcmp(functionName, "bool") == 0) {
+        return convertToBool(args);
     }
     else if (strcmp(functionName, "str") == 0) {
         return convertToStr(args);

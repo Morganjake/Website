@@ -70,7 +70,10 @@ struct Tokens tokenizeLine(char* line) {
                 i++;
             }
             tokensBuffer[TokenBufferLocation] = '\0';
-            if (i < strlen(line) && line[i] == '(') {
+            if (strcmp(tokensBuffer, "True") == 0 || strcmp(tokensBuffer, "False") == 0) {
+                updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, BooleanToken);
+            }
+            else if (i < strlen(line) && line[i] == '(') {
                 updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, FunctionToken);
             }
             else {

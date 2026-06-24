@@ -19,6 +19,7 @@ void outputTokens(struct Tokens* allTokens, int lineCount) {
         "Null Token",
         "Integer Token",
         "Float Token",
+        "Boolean Token",
         "String Token",
         "Assignment Token",
         "Bracket Token",

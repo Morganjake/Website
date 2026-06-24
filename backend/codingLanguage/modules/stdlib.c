@@ -8,7 +8,7 @@
 #include "../parser/parserHeaders/functionCaller.h"
 
 
-struct Value print(struct Values args) {
+struct Value print(struct Values args, char* ending) {
     for (int i = 0; i < args.count; i++) {
         struct Value val = args.values[i];
         if (val.type == IntegerType) {
@@ -17,11 +17,15 @@ struct Value print(struct Values args) {
         else if (val.type == FloatType) {
             printf("%f\n", *(float*) val.valuePtr);
         }
+        
+        else if (val.type == BooleanType) {
+            printf(*val.valuePtr == 1 ? "True" : "False");
+        }
         else if (val.type == StringType) {
             printf("%s", (char*) val.valuePtr);
         }
 
-        printf(i != args.count - 1 ? ", " : "\n");
+        printf(i != args.count - 1 ? ", " : ending);
     }
 
     return returnInt(1);
@@ -37,6 +41,9 @@ struct Value convertToInt(struct Values args) {
     }
     else if (arg.type == FloatType) {
         return returnInt((int) *(float*) arg.valuePtr);
+    }
+    else if (arg.type == BooleanType) {
+        return returnInt(*arg.valuePtr);
     }
     else if (arg.type == StringType) {
         char* string = (char*) arg.valuePtr;
@@ -69,10 +76,13 @@ struct Value convertToFloat(struct Values args) {
     struct Value arg = args.values[0];
 
     if (arg.type == IntegerType) {
-        return returnFloat((float) *(int*) arg.valuePtr);
+        return returnFloat((float) *arg.valuePtr);
     }
     else if (arg.type == FloatType) {
         return returnFloat(*(float*) arg.valuePtr);
+    }
+    else if (arg.type == BooleanType) {
+        return returnFloat((float) *arg.valuePtr);
     }
     else if (arg.type == StringType) {
         char* string = (char*) arg.valuePtr;
@@ -104,6 +114,25 @@ struct Value convertToFloat(struct Values args) {
 }
 
 
+struct Value convertToBool(struct Values args) {
+    if (args.count != 1) { error("Argument Error: \"str\" function takes one input"); }
+    struct Value arg = args.values[0];
+
+    if (arg.type == IntegerType) {
+        return returnBool(*arg.valuePtr != 0 ? 1 : 0);
+    }
+    else if (arg.type == FloatType) {
+        return returnBool(*(float*) arg.valuePtr >= 1 ? 1 : 0);
+    }
+    else if (arg.type == BooleanType) {
+        return returnBool(*arg.valuePtr);
+    }
+    else if (arg.type == StringType) {
+        return returnBool(strlen((char*) arg.valuePtr) >= 1 ? 1 : 0);
+    }
+}
+
+
 struct Value convertToStr(struct Values args) {
     if (args.count != 1) { error("Argument Error: \"str\" function takes one input"); }
     struct Value arg = args.values[0];
@@ -119,6 +148,9 @@ struct Value convertToStr(struct Values args) {
         char* stringBuffer = malloc(numLen + 1);
         snprintf(stringBuffer, numLen + 1, "%f", *(float*) arg.valuePtr);
         return returnString(stringBuffer);
+    }
+    else if (arg.type == BooleanType) {
+        return returnString(*arg.valuePtr == 1 ? "True" : "False");
     }
     else if (arg.type == StringType) {
         return returnString((char*) arg.valuePtr);
