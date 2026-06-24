@@ -18,6 +18,16 @@ int* convertTokenToType(struct Token token) {
         *valuePtr = atof(token.value);
         return (int*) valuePtr;
     }
+    else if (token.tokenType == BooleanToken) {
+        int* valuePtr = malloc(sizeof(int));
+        if (strcmp(token.value, "True") == 0) {
+            *valuePtr = 1;
+        }
+        else {
+            *valuePtr = 0;
+        }
+        return valuePtr;
+    }
     else if (token.tokenType == StringToken) {
         char* valuePtr = malloc((strlen(token.value) + 1) * sizeof(char));
         strcpy(valuePtr, token.value);

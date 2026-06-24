@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Editor</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
         <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
         <link rel="stylesheet" href="/css/code.css">
     </head>
@@ -25,23 +26,23 @@ print("The return value of b is " + str(b));
 
                 <div id="code-editor-footer">
                     <div id="file-settings">
-                        <button class="file-setting">IMPORT</button>
-                        <button class="file-setting">EXPORT</button>
+                        <button class="file-setting"><i class="fa-solid fa-download"></i> IMPORT</button>
+                        <button class="file-setting"><i class="fa-solid fa-upload"></i> EXPORT</button>
                     </div>
                     <div id="submit-button-container">
-                        <button id="submit-button">Submit Code</button>
+                        <button id="submit-button"><i class="fa-solid fa-play"></i> Submit Code</button>
                     </div>
                 </div>
             </div>
 
             <div id="info">
                 <div id="tabs">
-                    <button class="tab" onclick="changeTab('Output')" id="selected">Output</button>
-                    <button class="tab" onclick="changeTab('Variables')">Variables</button>
-                    <button class="tab" onclick="changeTab('Tokens')">Tokens</button>
-                    <button class="tab" onclick="changeTab('AST')">AST</button>
-                    <button class="tab" onclick="changeTab('Docs')">Docs</button>
-                    <button class="tab" onclick="changeTab('Logs')">Logs</button>
+                    <button class="tab" onclick="changeTab('Output')" id="selected"><i class="fa-solid fa-lg fa-code"></i> Output</button>
+                    <button class="tab" onclick="changeTab('Variables')"><i class="fa-solid fa-lg fa-list"></i> Variables</button>
+                    <button class="tab" onclick="changeTab('Tokens')"><i class="fa-solid fa-lg fa-table-list"></i> Tokens</button>
+                    <button class="tab" onclick="changeTab('AST')"><i class="fa-solid fa-lg fa-diagram-project"></i> AST</button>
+                    <button class="tab" onclick="changeTab('Docs')"><i class="fa-solid fa-lg fa-book-open"></i> Docs</button>
+                    <button class="tab" onclick="changeTab('Logs')"><i class="fa-solid fa-lg fa-timeline"></i> Logs</button>
                 </div>
                 <div class="output" id="output-output">Run code to get an output</div>
                 <div class="output" id="variables-output" hidden="true">Run code to see the variables</div>
