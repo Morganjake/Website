@@ -12,6 +12,9 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
 
     struct Value res = (struct Value) {NullType, NULL};
 
+    if (leftOperand.type == BooleanType) { leftOperand.type = IntegerType; }
+    if (rightOperand.type == BooleanType) { rightOperand.type = IntegerType; }
+
     if (leftOperand.type == IntegerType && rightOperand.type == IntegerType) {
         int leftValue = *leftOperand.valuePtr;
         int rightValue = *rightOperand.valuePtr;
