@@ -10,6 +10,7 @@ enum astNodeType {
     VariableNode,
     AssignmentNode,
     MathOperatorNode,
+    LogicalOperatorNode,
     FunctionNode
 };
 

@@ -21,8 +21,8 @@ function formatforTokens(tokens, lines) {
     for (let i = 0; i < tokens.length; i += 2) {
 
         let line = '<p><tokenType> - ' + tokens[i] + ':</tokenType>'
-        // Yeah 49 is a magic number, but it represents the length of "line" using the longest token type, and there isn't really a nicer way to simply do it 
-        line += " ".repeat(3 + Math.max(49 - line.length, 0)) + '<tokenValue>' + tokens[i + 1] +'</tokenValue></p>';
+        // Yeah 52 is a magic number, but it represents the length of "line" using the longest token type, and there isn't really a nicer way to simply do it 
+        line += " ".repeat(3 + Math.max(52 - line.length, 0)) + '<tokenValue>' + tokens[i + 1] +'</tokenValue></p>';
         res.push(line);
 
         if (tokens[i] == "EOL Token" && i + 2 < tokens.length) {
@@ -53,9 +53,9 @@ module.exports = {
     
     async interfaceWithC(input) {
         lines = input.split("\n");
-        input = input.replace(/\n/g, " ").replace(/"/g, "\\\"");
+        input = input.replace(/\n/g, " ").replace(/"/g, "\\\"").trim();
         let res = "";
-        exec(path.join(__dirname, "main.exe " + input), (err, stdout, stderr) => {
+        exec(path.join(__dirname,  `main.exe "${input}"`), (err, stdout, stderr) => {
 
             if (err) {
                 console.error(err);

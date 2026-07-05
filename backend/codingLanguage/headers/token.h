@@ -12,6 +12,7 @@ enum TokenType {
     AssignmentToken,
     BracketToken,
     MathOperatorToken,
+	LogicalOperatorToken,
     FunctionToken,
     CommaToken
 };

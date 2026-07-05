@@ -6,6 +6,7 @@ body {
         font-family: "JetBrains Mono";
         text-decoration: none;
         resize: none;
+        font-variant-ligatures: none
     }
 
     #workspace-container {

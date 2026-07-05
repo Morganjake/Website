@@ -24,6 +24,7 @@ void outputTokens(struct Tokens* allTokens, int lineCount) {
         "Assignment Token",
         "Bracket Token",
         "Math Operator Token",
+        "Logical Operator Token",
         "Function Token",
         "Comma Token"
     };
@@ -47,6 +48,7 @@ void outputAst(struct AstNode* allAsts, int lineCount, int indentLevel) {
         "Variable Node",
         "Assignment Node",
         "Math Operator",
+        "Logical Operator",
         "Function Node"
     };
     
@@ -80,5 +82,17 @@ void errorf(char* e1, char* e2, char* e3) {
     strcat(errMessage, e2);
     strcat(errMessage, e3);
     errMessage[strlen(e1) + strlen(e2) + strlen(e3)] = '\0';
+    error(errMessage);
+}
+
+
+void errorf5(char* e1, char* e2, char* e3, char* e4, char* e5) {
+    char* errMessage = malloc(sizeof(char) * (strlen(e1) + strlen(e2) + strlen(e3) + strlen(e4) + strlen(e5) + 1));
+    strcpy(errMessage, e1);
+    strcat(errMessage, e2);
+    strcat(errMessage, e3);
+    strcat(errMessage, e4);
+    strcat(errMessage, e5);
+    errMessage[strlen(e1) + strlen(e2) + strlen(e3) + strlen(e4) + strlen(e5)] = '\0';
     error(errMessage);
 }

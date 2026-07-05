@@ -27,8 +27,6 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
 
     if (leftOperand.type == IntegerType && rightOperand.type == IntegerType) {
 
-
-
         int leftValue = *leftOperand.valuePtr;
         int rightValue = *rightOperand.valuePtr;
 
@@ -40,8 +38,6 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
             case '*': *resultPtr = leftValue * rightValue; break;
             case '\\': *resultPtr = leftValue / rightValue; break;
         }
-
-        res.type = IntegerType;
         if (leftIsBool && rightIsBool) { // If both operands are bools, then the result needs to be unconverted back to a boolean
             res.type = BooleanType;
             *resultPtr = resultPtr == 0 ? 0 : 1;
@@ -119,14 +115,110 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
             "String",
         };
 
-        char* l = types[leftOperand.type]; char* r = types[rightOperand.type];
-        char* errMessage = malloc(sizeof(char) * (strlen("Maths Error: Unsupported operations for types \"") + strlen(l) + strlen("\" and \"") + strlen(r) + strlen("\"")));
-        strcpy(errMessage, "Maths Error: Unsupported operations for types \"");
-        strcat(errMessage, l); strcat(errMessage, "\" and \""); strcat(errMessage, r); strcat(errMessage, "\"");
+        if (leftIsBool) { leftOperand.type = BooleanType; }
+        if (rightIsBool) { rightOperand.type = BooleanType; }
 
-        error(errMessage);
-        error("Maths Error: Unsupported operations for types ");
+        errorf5("Maths Error: Unsupported operations for types \"", types[leftOperand.type], "\" and \"", types[rightOperand.type],  "\"");
     }
 
+    return res;
+}
+
+
+struct Value calculateLogic(struct Value leftOperand, struct Value rightOperand, char* operator) {
+
+    struct Value res = (struct Value) {BooleanType, NULL};
+    int* resultPtr = malloc(sizeof(int));
+
+    bool leftIsBool = false;
+    bool rightIsBool = false;
+
+    if (leftOperand.type == BooleanType) {
+        leftOperand.type = IntegerType;
+        leftIsBool = true;
+    }
+    if (rightOperand.type == BooleanType) {
+        rightOperand.type = IntegerType;
+        rightIsBool = true;
+    }
+
+    if (leftOperand.type == IntegerType && rightOperand.type == IntegerType) {
+        int leftValue = *leftOperand.valuePtr;
+        int rightValue = *rightOperand.valuePtr;
+
+        if (strcmp(operator, "==") == 0) { *resultPtr = leftValue == rightValue ? 1 : 0; }
+        if (strcmp(operator, "!=") == 0) { *resultPtr = leftValue != rightValue ? 1 : 0; }
+        if (strcmp(operator, "<") == 0) { *resultPtr = leftValue < rightValue ? 1 : 0; }
+        if (strcmp(operator, "<=") == 0) { *resultPtr = leftValue <= rightValue ? 1 : 0; }
+        if (strcmp(operator, ">") == 0) { *resultPtr = leftValue > rightValue ? 1 : 0; }
+        if (strcmp(operator, ">=") == 0) { *resultPtr = leftValue >= rightValue ? 1 : 0; }
+
+        res.valuePtr = resultPtr;
+    }
+    else if (leftOperand.type == FloatType && rightOperand.type == FloatType) {
+        float leftValue = *(float*) leftOperand.valuePtr;
+        float rightValue = *(float*) rightOperand.valuePtr;
+
+        if (strcmp(operator, "==") == 0) { *resultPtr = leftValue == rightValue ? 1 : 0; }
+        if (strcmp(operator, "!=") == 0) { *resultPtr = leftValue != rightValue ? 1 : 0; }
+        if (strcmp(operator, "<") == 0) { *resultPtr = leftValue < rightValue ? 1 : 0; }
+        if (strcmp(operator, "<=") == 0) { *resultPtr = leftValue <= rightValue ? 1 : 0; }
+        if (strcmp(operator, ">") == 0) { *resultPtr = leftValue > rightValue ? 1 : 0; }
+        if (strcmp(operator, ">=") == 0) { *resultPtr = leftValue >= rightValue ? 1 : 0; }
+
+        res.valuePtr = (int*) resultPtr;
+    }
+    else if (leftOperand.type == IntegerType && rightOperand.type == FloatType ||
+        leftOperand.type == FloatType && rightOperand.type == IntegerType) {
+
+        float leftValue;
+        float rightValue;
+        if (leftOperand.type == IntegerType && rightOperand.type == FloatType) {
+            leftValue = (float) *leftOperand.valuePtr;
+            rightValue = *(float*) rightOperand.valuePtr;
+        }
+        else {
+            leftValue = *(float*) leftOperand.valuePtr;
+            rightValue = (float) *rightOperand.valuePtr;
+        }
+
+        if (strcmp(operator, "==") == 0) { *resultPtr = leftValue == rightValue ? 1 : 0; }
+        if (strcmp(operator, "!=") == 0) { *resultPtr = leftValue != rightValue ? 1 : 0; }
+        if (strcmp(operator, "<") == 0) { *resultPtr = leftValue < rightValue ? 1 : 0; }
+        if (strcmp(operator, "<=") == 0) { *resultPtr = leftValue <= rightValue ? 1 : 0; }
+        if (strcmp(operator, ">") == 0) { *resultPtr = leftValue > rightValue ? 1 : 0; }
+        if (strcmp(operator, ">=") == 0) { *resultPtr = leftValue >= rightValue ? 1 : 0; }
+
+        res.valuePtr = (int*) resultPtr;
+    }
+    else if (leftOperand.type == StringType && rightOperand.type == StringType) {
+
+        // Only + is supported for strings
+        if (strcmp(operator, "==") == 0) {
+            *resultPtr = strcmp((char*) leftOperand.valuePtr, (char*) rightOperand.valuePtr) == 0 ? 1 : 0;
+            res.valuePtr = resultPtr;
+        }
+        else if (strcmp(operator, "!=") == 0) {
+            *resultPtr = strcmp((char*) leftOperand.valuePtr, (char*) rightOperand.valuePtr) != 0 ? 1 : 0;
+            res.valuePtr = resultPtr;
+        }
+        else {
+            error("Logic Error: Unsupported operation for strings");
+        }
+    }
+    else {
+        char *types[] = {
+            "Null",
+            "Integer",
+            "Float",
+            "Boolean",
+            "String",
+        };
+
+        if (leftIsBool) { leftOperand.type = BooleanType; }
+        if (rightIsBool) { rightOperand.type = BooleanType; }
+
+        errorf5("Logic Error: Unsupported operations for types \"", types[leftOperand.type], "\" and \"", types[rightOperand.type],  "\"");
+    }
     return res;
 }

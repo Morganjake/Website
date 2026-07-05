@@ -58,7 +58,6 @@ struct Tokens tokenizeLine(char* line) {
     int bracketCount = 0; // Verifies that every opening bracket has a valid corresponding closing bracket
 
     while (i < strlen(line)) {
-
         if (line[i] == ' ') {
             i++;
         }
@@ -125,12 +124,35 @@ struct Tokens tokenizeLine(char* line) {
         }
         else if (line[i] == '=') {
             tokensBuffer[0] = line[i];
-            updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, AssignmentToken);
-            i++;
+
+            if (i < strlen(line) - 1 && line[i + 1] == '=') {
+                tokensBuffer[1] = line[i + 1];
+                updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, LogicalOperatorToken);
+                i += 2;
+            }
+            else {
+                updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, AssignmentToken);
+                i++;
+            }
+        }
+        else if (i < strlen(line) - 1 && line[i] == '!' && line[i + 1] == '=') {
+            tokensBuffer[0] = line[i];
+            tokensBuffer[1] = line[i + 1];
+            updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, LogicalOperatorToken);
+            i += 2;
         }
         else if (line[i] == '+' || line[i] == '-' || line[i] == '*' || line[i] == '\\') { // Yeah the divisor is flipped for C reasons
             tokensBuffer[0] = line[i];
             updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, MathOperatorToken);
+            i++;
+        }
+        else if (line[i] == '<' || line[i] == '>') {
+            tokensBuffer[0] = line[i];
+            if (i < strlen(line) - 1 && line[i + 1] == '=') {
+                tokensBuffer[1] = line[i + 1];
+                i++;
+            }
+            updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, LogicalOperatorToken);
             i++;
         }
         else if (line[i] == ',') {

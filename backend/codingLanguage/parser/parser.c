@@ -88,6 +88,20 @@ struct Value parseNode(struct AstNode node, struct Variables* variablesPtr) {
 
         return calculateMath(leftOperand, rightOperand, node.token.value);
     }
+    else if (node.type == LogicalOperatorNode) {
+        
+        if (node.childNodes[0].type == EmptyNode) {
+            error("Operator missing left operand");
+        }
+        else if (node.childNodes[1].type == EmptyNode) {
+            error("Operator missing right operand");
+        }
+
+        struct Value leftOperand = parseNode(node.childNodes[0], variablesPtr);
+        struct Value rightOperand = parseNode(node.childNodes[1], variablesPtr);
+
+        return calculateLogic(leftOperand, rightOperand, node.token.value);
+    }
     else if (node.type == FunctionNode) {
         
         struct Value* functionArgs = malloc(sizeof(struct Value) * node.childNodeCount);

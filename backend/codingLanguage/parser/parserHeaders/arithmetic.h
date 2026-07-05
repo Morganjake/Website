@@ -4,5 +4,6 @@
 #define ARITHMETIC_H
 
 struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, char* operator);
+struct Value calculateLogic(struct Value leftOperand, struct Value rightOperand, char* operator);
 
 #endif

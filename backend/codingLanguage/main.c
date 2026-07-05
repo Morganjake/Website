@@ -44,7 +44,6 @@ int main(int argc, char *argv[]) {
         curLine = realloc(curLine, len + 2);
         curLine[len] = text[i];
         curLine[len + 1] = '\0';
-        
         if (text[i] == '\n') { continue; }
         else if (text[i] == '"') { inString = !inString; }
         else if ((text[i] == ';' || text[i] == '{' || text[i] == '}') && !inString) {

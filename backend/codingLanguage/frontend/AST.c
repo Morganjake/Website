@@ -64,6 +64,7 @@ struct AstNodes createASTArray(struct Tokens tokens, int startIndex) {
                 node = createAST((struct Tokens) {tokens.tokens, i}, firstBracketPos + 1);
                 break;
             case MathOperatorToken: node.type = MathOperatorNode; break;
+            case LogicalOperatorToken: node.type = LogicalOperatorNode; break;
             case FunctionToken:
                 node.type = FunctionNode;
                 i += 1; // Skip function and bracket token (if a function token exists it is always followed by an open bracket)
@@ -117,6 +118,30 @@ struct AstNode createAST(struct Tokens tokens, int startIndex) {
 
 
 struct AstNode buildAST(struct AstNodes astNodes) {
+
+    for (int i = 0; i < astNodes.nodeCount; i++) {
+        struct AstNode node = astNodes.nodes[i];
+        if (node.childNodeCount != 0) { continue; } // If the node already has children it has already been built and should be a sub-node
+        if (node.type == LogicalOperatorNode) {
+            
+            if (i == 0 || astNodes.nodes[i - 1].type == EmptyNode) { // If i is 0 there is nothing to the left of the operator
+                error("Syntax Error: Operator missing left operand");
+            }
+            else if (i == astNodes.nodeCount - 1 || astNodes.nodes[i + 1].type == EmptyNode) {
+                error("Syntax Error: Operator missing right operand");
+            }
+
+            node.childNodes = malloc(sizeof(struct AstNode) * 2);
+            node.childNodeCount = 2;
+            node.childNodes[0] = astNodes.nodes[i - 1]; node.childNodes[1] = astNodes.nodes[i + 1];
+            removeASTNode(&astNodes, i + 1);  removeASTNode(&astNodes, i - 1);
+            astNodes.nodes[i - 1] = node;
+            i--;
+            
+            return node;
+        }
+    }
+
     for (int i = 0; i < astNodes.nodeCount; i++) {
         struct AstNode node = astNodes.nodes[i];
         if (node.childNodeCount != 0) { continue; } // If the node already has children it has already been built and should be a sub-node
@@ -142,7 +167,6 @@ struct AstNode buildAST(struct AstNodes astNodes) {
         struct AstNode node = astNodes.nodes[i];
         if (node.childNodeCount != 0) { continue; } // If the node already has children it has already been built and should be a sub-node
         if (node.type == MathOperatorNode && (strcmp(node.token.value, "+") == 0 || strcmp(node.token.value, "-") == 0)) {
-
             if (i == 0 || astNodes.nodes[i - 1].type == EmptyNode) { // If i is 0 there is nothing to the left of the operator
                 error("Syntax Error: Operator missing left operand");
             }
