@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "../Headers/token.h"
 #include "../Headers/astNode.h"
@@ -12,10 +13,22 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
 
     struct Value res = (struct Value) {NullType, NULL};
 
-    if (leftOperand.type == BooleanType) { leftOperand.type = IntegerType; }
-    if (rightOperand.type == BooleanType) { rightOperand.type = IntegerType; }
+    bool leftIsBool = false;
+    bool rightIsBool = false;
+
+    if (leftOperand.type == BooleanType) {
+        leftOperand.type = IntegerType;
+        leftIsBool = true;
+    }
+    if (rightOperand.type == BooleanType) {
+        rightOperand.type = IntegerType;
+        rightIsBool = true;
+    }
 
     if (leftOperand.type == IntegerType && rightOperand.type == IntegerType) {
+
+
+
         int leftValue = *leftOperand.valuePtr;
         int rightValue = *rightOperand.valuePtr;
 
@@ -29,6 +42,13 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
         }
 
         res.type = IntegerType;
+        if (leftIsBool && rightIsBool) { // If both operands are bools, then the result needs to be unconverted back to a boolean
+            res.type = BooleanType;
+            *resultPtr = resultPtr == 0 ? 0 : 1;
+        }
+        else {
+            res.type = IntegerType;
+        }
         res.valuePtr = resultPtr;
     }
     else if (leftOperand.type == FloatType && rightOperand.type == FloatType) {
@@ -95,6 +115,7 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
             "Null",
             "Integer",
             "Float",
+            "Boolean",
             "String",
         };
 
