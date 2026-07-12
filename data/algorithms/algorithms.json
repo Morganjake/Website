@@ -1,0 +1,16 @@
+[
+    {
+        "topicName": "Trees",
+        "algorithms": [
+            "Binary Lifting",
+            "BFS",
+            "DFS"
+        ]
+    },
+    {
+        "topicName": "Graphs",
+        "algorithms": [
+            "Dijkstra"
+        ]
+    }
+]

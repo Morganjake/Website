@@ -9,19 +9,25 @@ app.set("view engine", "ejs")
 app.set("views", "app/views")
 
 app.get('/', (req, res) => {
-	res.send('Hello!');
+    res.send('Hello!');
 });
 
 app.get('/code', (req, res) => {
-	res.render("code")
+    res.render("code")
+});
+
+app.get('/write-ups/:topic/:algorithm', (req, res) => {
+    const { topic, algorithm } = req.params;
+    const algorithms = require("./data/algorithms/algorithms.json")
+    res.render("write-ups", { algorithms: algorithms, topic: topic, algorithm: algorithm })
 });
 
 app.post('/api/submit', (req, res) => {
-	const { text } = req.body;
-	console.log('Received:', text);
-	res.json({ ok: true });
+    const { text } = req.body;
+    console.log('Received:', text);
+    res.json({ ok: true });
 });
 
 app.listen(port, () => {
-	console.log(`App listening at ${port}`);
+    console.log(`App listening at ${port}`);
 });

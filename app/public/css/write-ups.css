@@ -1,0 +1,65 @@
+body {
+	background-color: rgb(25, 35, 50);
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+
+	div, button {
+		background-color: transparent;
+		font-family: "JetBrains Mono";
+		resize: none;
+        color: rgb(230, 230, 230);
+        border-style: none;
+        border-radius: 5px;
+    }
+
+    #page-container {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 20% auto 20%;
+        padding-inline: 5px;
+        box-sizing: border-box;
+
+        #sidebar {
+
+            padding-block: 10px;
+
+            .topic-list {
+
+                button {
+                    transition: ease-out 0.2s;
+                }
+
+                button:hover {
+                    color: rgb(100, 215, 250);
+                }
+
+                .topic-name {
+                    font-size: large;
+                }
+
+                .algorithm-list {
+
+                    margin: 0;
+
+                    .algorithm {
+                        font-size: medium;
+                    }
+                }
+            }
+        }
+
+        #writeup {
+            overflow-y: auto;
+
+            #writeup-title {
+                font-size: xx-large;
+                font-weight: bold;
+                padding-bottom: 10px;
+            }
+            
+        }
+    }
+}
