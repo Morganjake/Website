@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Write-ups</title>
+        <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
+        <link rel="stylesheet" href="/css/write-ups.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"/>
+    </head>
+    <body>
+        <%- include('partials/header') %>
+        <div id="page-container">
+            <div id="sidebar">
+                <% algorithms.forEach(topic => { %>
+                    <div class="topic-list">
+                        <button class="topic-name"><%= topic.topicName%></button>
+                        <ul class="algorithm-list">
+                            <% topic.algorithms.forEach(algorithm => { %>
+                                <li>
+                                    <button class="algorithm" onclick="changeWriteup('<%= topic.topicName %>', '<%= algorithm %>')" ><%= algorithm %></button>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                <% }) %>
+            </div>
+            <div id="writeup">
+                <%- include('write-ups/' + topic + '/' + algorithm) %>
+            </div>
+        </div>
+        <script src="/js/write-ups.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    </body>
+</html>

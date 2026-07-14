@@ -1,0 +1,14 @@
+[
+    {
+        "topicName": "Numbers",
+        "algorithms": [
+            "Euclidean Algorithm (gcd)"
+        ]
+    },
+    {
+        "topicName": "Trees",
+        "algorithms": [
+            "Binary Lifting"
+        ]
+    }
+]
