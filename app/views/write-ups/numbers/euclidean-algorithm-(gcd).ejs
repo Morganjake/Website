@@ -1,0 +1,48 @@
+<div id="title">Euclidean Algorithm (GCD)</div>
+<p>The Euclidean Algorithm is a very efficent way to find the <b>Greatest Common Divisor (GCD)</b> of two numbers.</p>
+<p class="header">The trick</p>
+<p>The key reason why the Euclidean Algorithm works is that if <var>d</var> divides both <var>a</var> and <var>b</var>, then it also divides <var>a % b</var></p>
+<p class="header-small">Proof:</p>
+<p>By definition, we can write integer division as </p>
+<p class="code-block">a = quotient * b + remainder</p>
+<p class="text-small"><var>quotient = a // b</var> <var>remainder = a % b</var></p>
+<br>
+<p>We can rearrange that to</p>
+<p class="code-block">remainder = a - quotient * b</p>
+<br>
+<p>
+    Since we know that <var>d</var> divides <var>a</var>, we know that <var>a = d * m</var> for some integer <var>m</var>, and we can do the same for <var>b</var> so we also
+    know that <var>b = d * n</var> for some integer <var>n</var>
+</p>
+<p>Knowing this we can sustitute in our equation to get</p>
+<p class="code-block">remainder = d * m - quotient * d * n</p>
+<br>
+<p>We can rearrange to get</p>
+<p class="code-block">remainder = d * m -  d * quotient * n</p>
+<br>
+<p>And then simplify</p>
+<p class="code-block">remainder = d * (m - quotient * n)</p>
+<br>
+<p>
+    Since we know that <var>m - quotient * n</var> in an integer, we prove that <var>d</var> multiplied by some integer is equal to <var>remainder</var>,
+    proving that <var>divisor</var> can divide <var>a % b</var>
+</p>
+<p>Now we have proved that if <var>d</var> divides <var>a</var> and <var>b</var>, it also divides <var>a % b</var>.</p>
+<br>
+<p class="header-small">Code:</p>
+<pre><code class="language-python">def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+</code></pre>
+<p>
+    Each iteration, <var>a</var> and <var>b</var> gets replaced by <var>b</var> and <var>a % b</var>. Since <var>a % b</var> is always less than <var>b</var>,
+    <var>b</var> keeps shrinking, eventually reaching <var>0</var>.
+    The GCD of <var>a</var> and <var>0</var>, is always going to be <var>a</var>, and every integer divides <var>0</var>, the result will always be <var>a</var>
+</p>
+<br>
+<p>
+    The time complexity is <b>O(log(min(<var>a</var>, <var>b</var>)))</b> as <var>a % b</var> is always less than <var>b / 2</var>, meaning <var>a</var> and <var>b</var>
+    both half every two iterations
+</p>
+    

@@ -1,16 +1,14 @@
 [
     {
-        "topicName": "Trees",
+        "topicName": "Numbers",
         "algorithms": [
-            "Binary Lifting",
-            "BFS",
-            "DFS"
+            "Euclidean Algorithm (gcd)"
         ]
     },
     {
-        "topicName": "Graphs",
+        "topicName": "Trees",
         "algorithms": [
-            "Dijkstra"
+            "Binary Lifting"
         ]
     }
 ]
