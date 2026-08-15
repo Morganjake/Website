@@ -7,8 +7,9 @@
 extern char* globalLine;
 
 void outputTokens(struct Tokens* allTokens, int lineCount);
-void outputAst(struct AstNode* allAsts, int lineCount, int indentLevel);
+void outputAst(struct AstNode ast, int indentLevel);
 void error(char* errorMessage);
 void errorf(char* e1, char* e2, char* e3);
+void errorf5(char* e1, char* e2, char* e3, char* e4, char* e5);
 
 #endif

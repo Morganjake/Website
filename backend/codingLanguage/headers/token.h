@@ -10,8 +10,11 @@ enum TokenType {
     BooleanToken,
     StringToken,
     AssignmentToken,
-    BracketToken,
     MathOperatorToken,
+	LogicalOperatorToken,
+    BracketToken,
+    ScopeBracketToken,
+    SelectionToken,
     FunctionToken,
     CommaToken
 };

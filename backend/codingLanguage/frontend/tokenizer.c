@@ -56,9 +56,9 @@ struct Tokens tokenizeLine(char* line) {
     int i = 0;
 
     int bracketCount = 0; // Verifies that every opening bracket has a valid corresponding closing bracket
+    int scopeBracketCount = 0;
 
     while (i < strlen(line)) {
-
         if (line[i] == ' ') {
             i++;
         }
@@ -69,8 +69,13 @@ struct Tokens tokenizeLine(char* line) {
                 TokenBufferLocation++;
                 i++;
             }
+
             tokensBuffer[TokenBufferLocation] = '\0';
-            if (strcmp(tokensBuffer, "True") == 0 || strcmp(tokensBuffer, "False") == 0) {
+
+            if (strcmp(tokensBuffer, "if") == 0) {
+                updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, SelectionToken);
+            }
+            else if (strcmp(tokensBuffer, "True") == 0 || strcmp(tokensBuffer, "False") == 0) {
                 updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, BooleanToken);
             }
             else if (i < strlen(line) && line[i] == '(') {
@@ -123,14 +128,43 @@ struct Tokens tokenizeLine(char* line) {
             updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, BracketToken);
             i++;
         }
+        else if (line[i] == '{' || line[i] == '}') {
+
+            tokensBuffer[0] = line[i];
+            updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, ScopeBracketToken);
+            i++;
+        }
         else if (line[i] == '=') {
             tokensBuffer[0] = line[i];
-            updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, AssignmentToken);
-            i++;
+
+            if (i < strlen(line) - 1 && line[i + 1] == '=') {
+                tokensBuffer[1] = line[i + 1];
+                updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, LogicalOperatorToken);
+                i += 2;
+            }
+            else {
+                updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, AssignmentToken);
+                i++;
+            }
+        }
+        else if (i < strlen(line) - 1 && line[i] == '!' && line[i + 1] == '=') {
+            tokensBuffer[0] = line[i];
+            tokensBuffer[1] = line[i + 1];
+            updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, LogicalOperatorToken);
+            i += 2;
         }
         else if (line[i] == '+' || line[i] == '-' || line[i] == '*' || line[i] == '\\') { // Yeah the divisor is flipped for C reasons
             tokensBuffer[0] = line[i];
             updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, MathOperatorToken);
+            i++;
+        }
+        else if (line[i] == '<' || line[i] == '>') {
+            tokensBuffer[0] = line[i];
+            if (i < strlen(line) - 1 && line[i + 1] == '=') {
+                tokensBuffer[1] = line[i + 1];
+                i++;
+            }
+            updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, LogicalOperatorToken);
             i++;
         }
         else if (line[i] == ',') {

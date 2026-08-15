@@ -5,11 +5,15 @@
 #define ASTNODE_H
 
 enum astNodeType {
+    ScopeNode,
     EmptyNode,
     ValueNode,
     VariableNode,
     AssignmentNode,
     MathOperatorNode,
+    LogicalOperatorNode,
+    SelectionNode,
+    ScopeBracketNode,
     FunctionNode
 };
 
