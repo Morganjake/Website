@@ -22,9 +22,11 @@ void outputTokens(struct Tokens* allTokens, int lineCount) {
         "Boolean Token",
         "String Token",
         "Assignment Token",
-        "Bracket Token",
         "Math Operator Token",
         "Logical Operator Token",
+        "Bracket Token",
+        "Scope Bracket Token",
+        "Selection Token",
         "Function Token",
         "Comma Token"
     };
@@ -40,31 +42,39 @@ void outputTokens(struct Tokens* allTokens, int lineCount) {
 }
 
 
-void outputAst(struct AstNode* allAsts, int lineCount, int indentLevel) {
+void outputAst(struct AstNode ast, int indentLevel) {
 
     char *astNodeTypeNames[] = {
+        "Scope Node",
         "Empty Node",
         "Value",
         "Variable Node",
         "Assignment Node",
         "Math Operator",
         "Logical Operator",
+        "Selection Node",
+        "Scope Bracket Node",
         "Function Node"
     };
     
-    for (int i = 0; i < lineCount; i++) {
-        struct AstNode ast = allAsts[i];
-        
-        if (ast.type == ValueNode && ast.token.tokenType == StringToken) {
-            printf("%d%d\n%d%s\n%d\"%s\"\n", AST_OUTPUT_ID, indentLevel, AST_OUTPUT_ID, astNodeTypeNames[ast.type], AST_OUTPUT_ID, ast.token.value);
-        }
-        else {
-            printf("%d%d\n%d%s\n%d%s\n", AST_OUTPUT_ID, indentLevel, AST_OUTPUT_ID, astNodeTypeNames[ast.type], AST_OUTPUT_ID, ast.token.value);
-        }
+    if (ast.type == ValueNode && ast.token.tokenType == StringToken) {
+        printf("%d%d\n%d%s:\n%d\"%s\"\n", AST_OUTPUT_ID, indentLevel, AST_OUTPUT_ID, astNodeTypeNames[ast.type], AST_OUTPUT_ID, ast.token.value);
+    }
+    else if (ast.type == ScopeNode) {
+        printf("%d%d\n%dScope Node\n%d\n", AST_OUTPUT_ID, indentLevel, AST_OUTPUT_ID, AST_OUTPUT_ID);
+    }
+    else {
+        printf("%d%d\n%d%s:\n%d%s\n", AST_OUTPUT_ID, indentLevel, AST_OUTPUT_ID, astNodeTypeNames[ast.type], AST_OUTPUT_ID, ast.token.value);
+    }
 
-        for (int k = 0; k < ast.childNodeCount; k++) {
-            outputAst(&ast.childNodes[k], 1, indentLevel + 1);
+    for (int k = 0; k < ast.childNodeCount; k++) {
+
+        if (ast.type == ScopeNode) {
+            printf("%d%d\n%d\n%d\n", AST_OUTPUT_ID, indentLevel + 1, AST_OUTPUT_ID, AST_OUTPUT_ID);
         }
+        
+        outputAst(ast.childNodes[k], indentLevel + 1);
+
     }
 }
 

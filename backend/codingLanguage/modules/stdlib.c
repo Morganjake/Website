@@ -115,7 +115,7 @@ struct Value convertToFloat(struct Values args) {
 
 
 struct Value convertToBool(struct Values args) {
-    if (args.count != 1) { error("Argument Error: \"str\" function takes one input"); }
+    if (args.count != 1) { error("Argument Error: \"bool\" function takes one input"); }
     struct Value arg = args.values[0];
 
     if (arg.type == IntegerType) {

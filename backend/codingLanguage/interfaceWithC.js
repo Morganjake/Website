@@ -20,12 +20,18 @@ function formatforTokens(tokens, lines) {
 
     for (let i = 0; i < tokens.length; i += 2) {
 
-        let line = '<p><tokenType> - ' + tokens[i] + ':</tokenType>'
+        let line = '<p><tokenType> - ' + tokens[i] + ':</tokenType>';
+
+        if (tokens[i] == "Scope Bracket Token" && i + 2 < tokens.length && tokens[i - 2] != "EOL Token" && i - 2 >= 0) {
+            curLine++;
+            res.push(['<br><p id="line-number">Line ' + curLine + ': ' + lines[curLine - 1] + '</p>']);
+        }
+
         // Yeah 52 is a magic number, but it represents the length of "line" using the longest token type, and there isn't really a nicer way to simply do it 
         line += " ".repeat(3 + Math.max(52 - line.length, 0)) + '<tokenValue>' + tokens[i + 1] +'</tokenValue></p>';
         res.push(line);
 
-        if (tokens[i] == "EOL Token" && i + 2 < tokens.length) {
+        if ((tokens[i] == "EOL Token" || tokens[i] == "Scope Bracket Token") && i + 2 < tokens.length) {
             curLine++;
             res.push(['<br><p id="line-number">Line ' + curLine + ': ' + lines[curLine - 1] + '</p>']);
         }
@@ -39,10 +45,10 @@ function formatforAst(lines) {
     for (let i = 0; i < lines.length; i += 3) {
         let line = "<p>";
         
-        if (Number(lines[i]) > 0) { line += "<nodeLine>" + "│ ".repeat(Number(lines[i]) - 1) + "├ </nodeLine>";  }
+        if (Number(lines[i]) > 0) { line += "<nodeLine>" + "│ ".repeat(Number(lines[i]) - 1) + (lines[i + 1] == "" ? "│ " : "├ ") + "</nodeLine>";  }
         else if (i != 0) { line += "<br>"; }
 
-        line += "<nodeType>" + lines[i + 1] + ":</nodeType> " + lines[i + 2] + "</p>";
+        line += "<nodeType>" + lines[i + 1] + "</nodeType> " + lines[i + 2] + "</p>";
         res.push(line);
     }
     return res.join("");
@@ -50,10 +56,21 @@ function formatforAst(lines) {
 
 
 module.exports = {
-    
     async interfaceWithC(input) {
-        lines = input.split("\n");
-        input = input.replace(/\n/g, " ").replace(/"/g, "\\\"").trim();
+        input = input.replace(/\n/g, "").trim();
+        let lines = []
+        let curLine = "";
+        input.split("").forEach(i => {
+            if (i != "{") { curLine += i; }
+            if (i == ";" || i == "{" || i == "}") {
+                lines.push(curLine.trim());
+                if (i == "{") { lines.push("{"); }
+                curLine = "";
+            }
+
+        });
+        input = input.replace(/"/g, "\\\"");
+        
         let res = "";
         exec(path.join(__dirname,  `main.exe "${input}"`), (err, stdout, stderr) => {
 

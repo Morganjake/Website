@@ -40,21 +40,41 @@ int main(int argc, char *argv[]) {
     bool inString = false;
 
     for (int i = 0; text[i] != '\0'; i++) {
-        int len = strlen(curLine);
-        curLine = realloc(curLine, len + 2);
-        curLine[len] = text[i];
-        curLine[len + 1] = '\0';
-        if (text[i] == '\n') { continue; }
-        else if (text[i] == '"') { inString = !inString; }
+
+        // We don't add scope brackets to the line as we want them to be considered as a seperate line
+        if (!((text[i] == '{' || text[i] == '}') && !inString)) {
+            int len = strlen(curLine);
+            if (len == 0 && text[i] == ' ') { continue; } // Don't add leading whitespace to the line
+            curLine = realloc(curLine, len + 2);
+            curLine[len] = text[i];
+            curLine[len + 1] = '\0';
+        }
+
+        if (text[i] == '\n') {
+            continue;
+        }
+        else if (text[i] == '"') {
+            inString = !inString;
+        }
         else if ((text[i] == ';' || text[i] == '{' || text[i] == '}') && !inString) {
-            lines = realloc(lines, sizeof(char*) * (lineCount + 1));
-            lines[lineCount] = malloc(strlen(curLine) + 1);
-            strcpy(lines[lineCount], curLine);
-            lineCount++;
+
+            if (strlen(curLine) > 0) { // The only time this condition is false is when a scope bracket proceeds another scope bracket or semi-colon
+                lines = realloc(lines, sizeof(char*) * (lineCount + 1));
+                lines[lineCount] = malloc(strlen(curLine) + 1);
+                strcpy(lines[lineCount], curLine);
+                lineCount++;
+            }
 
             free(curLine);
             curLine = malloc(sizeof(char));
             curLine[0] = '\0';
+
+            // Because we did not add them to the line, we add them to their own seperate line
+            if (text[i] == '{' || text[i] == '}') {
+                lines = realloc(lines, sizeof(char*) * (lineCount + 1));
+                lines[lineCount] = text[i] == '{' ? "{\0" : "}\0";
+                lineCount++;
+            }
         }
     }
 
@@ -83,12 +103,11 @@ int main(int argc, char *argv[]) {
         allAsts[i] = createAST(allTokens[i], 0);
     }
 
-    outputAst(allAsts, lineCount, 0);
+    struct AstNode scope = layerAST(allAsts, 0, lineCount);
 
-    for (int i = 0; i < lineCount; i++) {
-        globalLine = lines[i];
-        parseNode(allAsts[i], &variables);
-    }
+    outputAst(scope, 0);
+    
+    parseNode(scope, &variables);
 
     outputVars(variables);
 

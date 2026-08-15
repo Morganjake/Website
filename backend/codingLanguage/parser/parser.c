@@ -45,12 +45,17 @@ struct Value parseNode(struct AstNode node, struct Variables* variablesPtr) {
 
     struct Variable var = (struct Variable) {"", (struct Value) {NullType, NULL}};
 
-    if (node.type == ValueNode) {
-        // node.token.tokenType - 2 works because the positions of the value tokens and types are offset by two in the enums
-        return (struct Value) {node.token.tokenType - 2, convertTokenToType(node.token)};
+    if (node.type == ScopeNode) {
+        for (int i = 0; i < node.childNodeCount; i++) {
+            parseNode(node.childNodes[i], variablesPtr);
+        }
     }
     else if (node.type == EmptyNode) {
         return (struct Value) {NullType, NULL};
+    }
+    else if (node.type == ValueNode) {
+        // node.token.tokenType - 2 works because the positions of the value tokens and types are offset by two in the enums
+        return (struct Value) {node.token.tokenType - 2, convertTokenToType(node.token)};
     }
     else if (node.type == VariableNode) {
         struct VariableExistsResult res = getVariable(node.token.value, variablesPtr, true);
@@ -101,6 +106,14 @@ struct Value parseNode(struct AstNode node, struct Variables* variablesPtr) {
         struct Value rightOperand = parseNode(node.childNodes[1], variablesPtr);
 
         return calculateLogic(leftOperand, rightOperand, node.token.value);
+    }
+    else if (node.type == SelectionNode) {
+        struct Value* condition = malloc(sizeof(struct Value));
+        condition[0] = parseNode(node.childNodes[0], variablesPtr);
+
+        if (*callFunction("bool", (struct Values) {condition, 1}).valuePtr == 1) {
+            parseNode(node.childNodes[1], variablesPtr);
+        }
     }
     else if (node.type == FunctionNode) {
         
