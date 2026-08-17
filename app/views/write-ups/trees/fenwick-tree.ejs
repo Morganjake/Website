@@ -1,0 +1,110 @@
+<div id="title">Fenwick Tree / Binary Indexed Tree (BIT)</div>
+<p class="text-small"><i>Note: the description and implementation shown below will be for sum queries and single updates only. Other versions of Fenwick trees exist.</i></p>
+<br>
+<p>
+    A Fenwick Tree or Binary Indexed Tree (BIT) is a data structure that stores information about prefix sums in an array that allows for efficent updating of elements by
+    re-calculating the prefix sum in <b>O(log(n))</b> time.
+</p>
+<br>
+<p>
+    It is an implict tree, meaning that it is actually stored as an array, where parent-child relationships are determined by running calculations on indexes to find
+    their parent.
+</p>
+<p class="header">Array Structure</p>
+<p>
+    Given an array <var>A</var> of length <var>N</var>, the size of the Fenwick Tree will be <var>N</var> + 1 as the 0th index is a dummy, and stores the sum of the range
+    <var>A(0, 0]</var>. Each odd index in the Fenwick tree will store the sum of the range <var>A(i - 1, i]</var> which in practise is the same as <var>A[i - 1]</var>.
+    Then the remaining odd indexes will store the sum of the range <var>A(i - 2, i]</var>. Then the remaining odd indexes will store the sum of the range 
+    <var>A(i - 4, i]</var>, and carrying on this process until there are no more empty indexes left.
+</p>
+<p class="header-small">Example</p>
+<p>Given an array <var>A</var> of length <var>N</var></p>
+<p class="code-block">[5, 13, -4, 12, 7, 0, -11, 8]</p>
+<p>The corresponding Fenwick Tree <var>F</var> will look like</p>
+<p class="code-block">[0, 5, 18, -4, 26, 7, 7, -11, 30]</p>
+<p>One way to write this is by saying <var>F[i]</var> = <var>A(i - lsb(i), i]</var>.</p>
+<p>The function <var>lsb</var> returns the value of the smallest set bit of a number.</p>
+<p class="text-small"><var>lsb(13)</var> == <var>lsb(1101<sub>2</sub>)</var> == 1, and <var>lsb(24)</var> == <var>lsb(11000<sub>2</sub>)</var> == 8</p>
+<p class="header">Populating The Array</p>
+<p>Given an array <var>Arr</var> initalise an array <var>F</var> of length <var>N</var> + 1 filled with 0s.</p>
+<pre><code class="language-python">F = [0] * (N + 1)</code></pre>
+<p>Next, we need to iterate over the range (1, <var>N</var>) and set a variable <var>r</var> to <var>i</var>.</p>
+<pre><code class="language-python">for i in range(1, N + 1):
+    r = i
+</code></pre>
+<p>
+    Now we can add <var>arr[i]</var> to <var>F[r]</var> and then set <var>r</var> to <var>r + (r & -r)</var>, which is equal to <var>r + lsb(r)</var>. By doing this
+    <var>r</var> becomes the parent index of the previous value of <var>r</var> allowing us to traverse the implicit tree.
+</p>
+<p>We want to repeat the prior 2 steps until the value of <var>r</var> is greater than <var>N</var>, the whole code looks like this.</p>
+<pre><code class="language-python">def populate(arr):
+    N = len(arr)
+    F = [0] * (N + 1)
+
+    for i in range(1, N + 1):
+        r = i
+        while r <= N:
+            F[r] += arr[i - 1]
+            r += (r & -r)
+</code></pre>
+<p>
+    A more efficent version of this exists, where we can just add <var>F[r]</var> to <var>F[r + (r & -r)</var>. By passing along the current value, we pass down the
+    running sum instead of each invdividual value. The code for it looks like this.
+</p>
+<pre><code class="language-python">def populate(arr):
+    N = len(arr)
+    F = [0] * (N + 1)
+
+    for i in range(1, N + 1):
+        r = i + (i & -i)
+        if r <= N: F[r] += F[i]
+</code></pre>
+<p>This code runs in <b>O(n)</b> time instead of <b>O(nlog(n))</b> time.</p>
+<p class="header">Updating The Array</p>
+<p>Updating the array is very easy as populating the array is essentially updating the array at each index in <var>arr</var>.</p>
+<p>
+    Given a value <var>val</var> and an index <var>idx</var>, we find the difference between <var>val</var> and the current value at <var>idx</var> and call it
+    <var>delta</var>, then we set the value at <var>arr[idx]</var> to <var>val</var>.
+</p>
+<pre><code class="language-python">delta = val - arr[index]</code></pre>
+<p>
+    Next, we start at <var>idx</var> + 1 and traverse the Fenwick tree like we did when populating the array, and adding <var>delta</var> to each index, the code
+    looks like this.
+</p>
+<pre><code class="language-python">def update(val, idx):
+    delta = val - arr[idx]
+    arr[idx] = val
+
+    r = idx + 1
+    while r <= N:
+        F[r] += dif
+        r += (r & -r)
+</code></pre>
+<p class="header">Finding The Range Sum</p>
+<p>
+    Much like a usual prefix sum array, given two indexes <var>left</var> and <var>right</var>, we can find the sum in a range by subtracting the left sum from
+    the right sum. But how do we find the left and right sums in the first place?
+</p>
+<br>
+<p>
+    Instead of jumping to the next index in which our current range in contained, we want to jump to the index that starts our range. The way to do this is to subtract
+    the lsb of out current index until we get to 0, and summing all the values at each traversed index. This works because the range for a given index in <var>F</var>
+    can be written as <var>arr(i - lsb(i), i]</var>, and each index in <var>F</var> always ends their range with <var>i</var>.
+</p>
+<br>
+<p>First, we want to initalise a variable <var>sum</var> to keep track of the running sum</p>
+<p>
+    Next, we want to add the value at <var>F[i]</var> to <var>sum</var> and set the value of <var>i</var> to <var>i & (i - 1) </var>, which is equal to <var>i - lsb(i)</var>.
+    We want to repeat the last two steps until the value of <var>i</var> is equal to 0, in which case we can return <var>sum</var>. The code looks like this.
+</p>
+<pre><code class="language-python">
+def prefixSum(i):
+    sum = 0
+    while i > 0:
+        sum += F[i]
+        i = i & (i - 1)
+    return sum
+
+def rangeSum(left, right):
+    return prefixSum(right) - prefixSum(left)
+</code></pre>

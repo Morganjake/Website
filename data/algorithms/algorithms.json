@@ -8,7 +8,8 @@
     {
         "topicName": "Trees",
         "algorithms": [
-            "Binary Lifting"
+            "Binary Lifting",
+            "Fenwick Tree"
         ]
     }
 ]
