@@ -115,6 +115,21 @@ struct Value parseNode(struct AstNode node, struct Variables* variablesPtr) {
             parseNode(node.childNodes[1], variablesPtr);
         }
     }
+    else if (node.type == IterationNode) {
+
+        while (true) {
+            struct Value* condition = malloc(sizeof(struct Value));
+            condition[0] = parseNode(node.childNodes[0], variablesPtr);
+
+            if (*callFunction("bool", (struct Values) {condition, 1}).valuePtr == 1) {
+                parseNode(node.childNodes[1], variablesPtr);
+            }
+            else {
+                break;
+            }
+        }
+
+    }
     else if (node.type == FunctionNode) {
         
         struct Value* functionArgs = malloc(sizeof(struct Value) * node.childNodeCount);

@@ -7,29 +7,29 @@ const port = 4000;
 app.use(express.static('app/public'));
 app.use(express.json());
 
-app.set("view engine", "ejs")
-app.set("views", "app/views")
+app.set("view engine", "ejs");
+app.set("views", "app/views");
 
 app.get('/', (req, res) => {
     res.send('Hello!');
 });
 
 app.get('/code', (req, res) => {
-	const updateLog = require("./data/code/updateLog.json")
-	res.render("code", { updateLog: updateLog.updates})
+	const updateLog = require("./data/code/updateLog.json");
+	res.render("code", { updateLog: updateLog.updates});
 });
 
 app.post('/api/submit', async (req, res) => {
 	const { text } = req.body;
-	let ans = await interfaceWithC.interfaceWithC(text)
+	let ans = await interfaceWithC.interfaceWithC(text);
 	res.json(ans);
-    res.render("code")
+    res.render("code");
 });
 
 app.get('/write-ups/:topic/:algorithm', (req, res) => {
     const { topic, algorithm } = req.params;
-    const algorithms = require("./data/algorithms/algorithms.json")
-    res.render("write-ups", { algorithms: algorithms, topic: topic, algorithm: algorithm })
+    const algorithms = require("./data/algorithms/algorithms.json");
+    res.render("write-ups", { algorithms: algorithms, topic: topic, algorithm: algorithm });
 });
 
 app.listen(port, () => {

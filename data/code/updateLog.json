@@ -51,6 +51,16 @@
             "additions": ["Added if statements"],
             "changes": ["Fixed a bug where having a logic operator in a statement would make both sides ignore some of the whole statement"],
             "removals": ["Removed more evil typos"]
+        },
+        {
+            "version": "v0.3.0 - Turing Complete",
+            "date": "2026-09-15",
+            "additions": [
+                "Added while loops",
+                "Added the modulos operator and the ability to do modulos maths with integerss"
+            ],
+            "changes": ["Fixed a bug where not having a closing speech mark at the end of a string would make the rest of the program the string and thus giving the wrong (but still technically correct) error"],
+            "removals": []
         }
     ]
 }

@@ -15,6 +15,7 @@ enum TokenType {
     BracketToken,
     ScopeBracketToken,
     SelectionToken,
+    IterationToken,
     FunctionToken,
     CommaToken
 };
