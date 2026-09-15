@@ -27,6 +27,7 @@ void outputTokens(struct Tokens* allTokens, int lineCount) {
         "Bracket Token",
         "Scope Bracket Token",
         "Selection Token",
+        "Iteration Token",
         "Function Token",
         "Comma Token"
     };
@@ -53,6 +54,7 @@ void outputAst(struct AstNode ast, int indentLevel) {
         "Math Operator",
         "Logical Operator",
         "Selection Node",
+        "Iteration Node",
         "Scope Bracket Node",
         "Function Node"
     };

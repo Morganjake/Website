@@ -13,6 +13,7 @@ enum astNodeType {
     MathOperatorNode,
     LogicalOperatorNode,
     SelectionNode,
+    IterationNode,
     ScopeBracketNode,
     FunctionNode
 };

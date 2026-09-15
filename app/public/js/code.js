@@ -4,7 +4,6 @@ function changeTab(newTab) {
     });
 
     Array.from(document.getElementsByClassName("output")).forEach(tab => {
-        console.log(tab)
         tab.hidden = tab.id != newTab.toLowerCase() + "-output";
     });
 }
@@ -32,7 +31,6 @@ btn.addEventListener("click", async () => {
         variablesOutput.innerHTML = data.Variables
         tokensOutput.innerHTML = data.Tokens
         astOutput.innerHTML = data.Ast
-        console.log("Response:", data);
     } 
     catch (err) {
         console.error("Error:", err);

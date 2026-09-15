@@ -75,6 +75,9 @@ struct Tokens tokenizeLine(char* line) {
             if (strcmp(tokensBuffer, "if") == 0) {
                 updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, SelectionToken);
             }
+            else if (strcmp(tokensBuffer, "while") == 0) {
+                updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, IterationToken);
+            }
             else if (strcmp(tokensBuffer, "True") == 0 || strcmp(tokensBuffer, "False") == 0) {
                 updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, BooleanToken);
             }
@@ -113,6 +116,7 @@ struct Tokens tokenizeLine(char* line) {
             updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, StringToken);
 
             if (line[i] == '"') { i++; } // Skip the closing quote
+            else { error("Syntax Error: String missing closing bracket"); } // Means there is no closing bracket
         }
         else if (line[i] == '(' || line[i] == ')') {
 
@@ -153,7 +157,7 @@ struct Tokens tokenizeLine(char* line) {
             updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, LogicalOperatorToken);
             i += 2;
         }
-        else if (line[i] == '+' || line[i] == '-' || line[i] == '*' || line[i] == '\\') { // Yeah the divisor is flipped for C reasons
+        else if (line[i] == '+' || line[i] == '-' || line[i] == '*' || line[i] == '\\'|| line[i] == '%') { // Yeah the divisor is flipped for C reasons
             tokensBuffer[0] = line[i];
             updateTokens(&tokens.tokens, tokensBuffer, &tokens.tokenCount, &TokenBufferLocation, MathOperatorToken);
             i++;

@@ -16,6 +16,14 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
     bool leftIsBool = false;
     bool rightIsBool = false;
 
+    char *types[] = {
+        "Null",
+        "Integer",
+        "Float",
+        "Boolean",
+        "String",
+    };
+
     if (leftOperand.type == BooleanType) {
         leftOperand.type = IntegerType;
         leftIsBool = true;
@@ -37,6 +45,8 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
             case '-': *resultPtr = leftValue - rightValue; break;
             case '*': *resultPtr = leftValue * rightValue; break;
             case '\\': *resultPtr = leftValue / rightValue; break;
+            case '%': *resultPtr = leftValue % rightValue; break;
+            default: errorf5("Maths Error: Unsupported operation for types \"", types[leftOperand.type], "\" and \"", types[rightOperand.type],  "\"");
         }
         if (leftIsBool && rightIsBool) { // If both operands are bools, then the result needs to be unconverted back to a boolean
             res.type = BooleanType;
@@ -58,6 +68,7 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
             case '-': *resultPtr = leftValue - rightValue; break;
             case '*': *resultPtr = leftValue * rightValue; break;
             case '\\': *resultPtr = leftValue / rightValue; break;
+            default: errorf5("Maths Error: Unsupported operation for types \"", types[leftOperand.type], "\" and \"", types[rightOperand.type],  "\"");
         }
 
         res.type = FloatType;
@@ -83,6 +94,7 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
             case '-': *resultPtr = leftValue - rightValue; break;
             case '*': *resultPtr = leftValue * rightValue; break;
             case '\\': *resultPtr = leftValue / rightValue; break;
+            default: errorf5("Maths Error: Unsupported operation for types \"", types[leftOperand.type], "\" and \"", types[rightOperand.type],  "\"");
         }
 
         res.type = FloatType;
@@ -107,13 +119,6 @@ struct Value calculateMath(struct Value leftOperand, struct Value rightOperand, 
         }
     }
     else {
-        char *types[] = {
-            "Null",
-            "Integer",
-            "Float",
-            "Boolean",
-            "String",
-        };
 
         if (leftIsBool) { leftOperand.type = BooleanType; }
         if (rightIsBool) { rightOperand.type = BooleanType; }
