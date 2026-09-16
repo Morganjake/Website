@@ -77,7 +77,7 @@
 
     r = idx + 1
     while r <= N:
-        F[r] += dif
+        F[r] += delta
         r += (r & -r)  # r = r + lsb(r)
 </code></pre>
 <p class="header">Finding The Range Sum</p>

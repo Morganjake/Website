@@ -2,7 +2,8 @@
     {
         "topicName": "Numbers",
         "algorithms": [
-            "Euclidean Algorithm (gcd)"
+            "Euclidean Algorithm (gcd)",
+            "Generate Ugly Numbers"
         ]
     },
     {

@@ -1,0 +1,37 @@
+<div id="title">Generate Ugly Numbers</div>
+<p class="text-small"><i>
+    An ugly number is a positive integer whos only prime factors are 2, 3, and 5. A super ugly number is a positive integer who's only primes are
+    within a sorted array <var>primes</var>. The code also works to find super ugly numbers.
+</i></p>
+<br>
+<p>The code to generate the Nth Ugly Number looks like this</p>
+<pre><code class="language-python">def nthUglyNumber(n):
+    uglyNums = [1]
+
+    for i in range(n - 1):
+        num = heappop(uglyNums)
+
+        for j in [2, 3, 5]:
+            heappush(uglyNums, num * j)
+            if num % j == 0: break
+
+    return heappop(uglyNums)
+</code></pre>
+<p>The interesting optimisation this code does is on line 9, where the code breaks when <var>j</var> is the first prime factor of <var>n</var></p>
+<p>This prevents duplicate numbers from being added to the heap because it insures that numbers are only made in there canonical prime order</p>
+<p class="text-small"><i>canonical in this case meaning that the primes factors are sorted in a reversed order</i></p>
+<p class="header">Why it works</p>
+<p>Given the number 6, there are 2 ways to generate it from its prime factors</p>
+<p class="code-block">6 = 2 * 3 <br> 6 = 3 * 2</p>
+<p>And for a number like 30, there are many ways to generate it from its prime factors</p>
+<p class="code-block">2 * 3 * 5 <br> 2 * 5 * 3 <br> 3 * 2 * 5 <br> 3 * 5 * 2 <br> 5 * 2 * 3 <br> 5 * 3 * 2 <br> </p>
+<p>The optimisation ensures that each number will only be generated one way.</p>
+<br>
+<p>Assuming the program has iterated over the range of <var>n</var> once, <var>uglyNums</var> will look like this:</p>
+<p class="code-block">[2, 3, 5]</p>
+<p>
+    Meaning that the value of <var>num</var> will be <var>2</var>. If you then iterate over <var>[2, 3, 5]</var>, the new values added to the heap will be
+    <var>4</var>, <var>6</var>, and <var>10</var>, but, with the optimisation only <var>4</var> will be generated.
+</p>
+<p>This is fine becuse on the next iteration over <var>n</var>, <var>num</var> will be <var>3</var>, and, 6 will be generated from <var>3 * 2</var>.</p>
+<p>The same thing will happen for 10, where it will be generated from <var>5 * 2</var> instead of <var>2 * 5</var>.</p>
